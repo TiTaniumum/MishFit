@@ -5,6 +5,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text> App.tsx to start working on your app!</Text>
+      {/* Hello Temirlan */}
       <StatusBar style="auto" />
     </View>
   );
