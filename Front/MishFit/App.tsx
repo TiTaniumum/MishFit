@@ -10,16 +10,6 @@ const RootStack = createNativeStackNavigator();
 
 export default function App() {
   return (
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-    <View style={styles.container}>
-      <Text> App.tsx to start working on your app!</Text>
-      {/* HEllo world */}
-      <StatusBar style="auto" />
-    </View>
-=======
->>>>>>> master_1
     <ContextProvider>
       <NavigationContainer>
         <RootStack.Navigator>
@@ -35,9 +25,5 @@ export default function App() {
         </RootStack.Navigator>
       </NavigationContainer>
     </ContextProvider>
-<<<<<<< HEAD
-=======
->>>>>>> main
->>>>>>> master_1
   );
 }
