@@ -8,6 +8,7 @@ export default function Home({ navigation }: any) {
   return (
     <View style={styles.container}>
         <Text>Hello World</Text>
+        <Text>Hello everyone</Text>
     </View>
   );
 }
