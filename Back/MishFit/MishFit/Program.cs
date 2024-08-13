@@ -1,7 +1,14 @@
+using MishFit;
+using MishFit.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<ApplicationDbContext>();
+
+builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 
 builder.Services.AddHealthChecks();
 

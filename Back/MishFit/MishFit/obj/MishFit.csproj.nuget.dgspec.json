@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\sayat\\Documents\\dev\\asp\\MishFit\\MishFit\\MishFit.csproj": {}
+    "C:\\Users\\sayat\\Documents\\dev\\asp\\Back\\MishFit\\MishFit\\MishFit.csproj": {}
   },
   "projects": {
-    "C:\\Users\\sayat\\Documents\\dev\\asp\\MishFit\\MishFit\\MishFit.csproj": {
+    "C:\\Users\\sayat\\Documents\\dev\\asp\\Back\\MishFit\\MishFit\\MishFit.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sayat\\Documents\\dev\\asp\\MishFit\\MishFit\\MishFit.csproj",
+        "projectUniqueName": "C:\\Users\\sayat\\Documents\\dev\\asp\\Back\\MishFit\\MishFit\\MishFit.csproj",
         "projectName": "MishFit",
-        "projectPath": "C:\\Users\\sayat\\Documents\\dev\\asp\\MishFit\\MishFit\\MishFit.csproj",
+        "projectPath": "C:\\Users\\sayat\\Documents\\dev\\asp\\Back\\MishFit\\MishFit\\MishFit.csproj",
         "packagesPath": "C:\\Users\\sayat\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sayat\\Documents\\dev\\asp\\MishFit\\MishFit\\obj\\",
+        "outputPath": "C:\\Users\\sayat\\Documents\\dev\\asp\\Back\\MishFit\\MishFit\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\sayat\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -44,6 +44,20 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[8.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.8, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[8.0.4, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
