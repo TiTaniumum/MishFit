@@ -10,6 +10,7 @@ export default function Home({ navigation }: any) {
         <Text>Hello World</Text>
         <Text>Good bye!</Text>
         <Text>Hello everyone</Text>
+        <Text>Task1 text</Text>
     </View>
   );
 }
