@@ -9,6 +9,7 @@ export default function Home({ navigation }: any) {
     <View style={styles.container}>
         <Text>Hello World</Text>
         <Text>Hello everyone</Text>
+        <Text>Task1 text</Text>
     </View>
   );
 }
