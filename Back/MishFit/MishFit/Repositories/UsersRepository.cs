@@ -32,6 +32,9 @@ public class UsersRepository : IUsersRepository
         //
         //
         //
+        //
+        
+        //
         var user = new User(contract);
 
         await _context.AddAsync(user);
