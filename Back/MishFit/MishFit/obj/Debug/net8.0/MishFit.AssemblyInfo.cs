@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MishFit")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0c4afaa2112f2d4ea9281545a20423640b7d0644")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1fce080be433d194a70222460d1e84358d8aa5fa")]
 [assembly: System.Reflection.AssemblyProductAttribute("MishFit")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MishFit")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

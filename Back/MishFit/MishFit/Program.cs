@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using MishFit;
 using MishFit.Repositories;
 using MishFit.Services;
@@ -19,6 +20,12 @@ builder.Services.AddControllers();
 builder.Logging.AddConsole();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    dbContext.Database.Migrate();
+}
 
 if (app.Environment.IsDevelopment())
 {
