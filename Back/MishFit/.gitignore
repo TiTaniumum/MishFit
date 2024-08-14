@@ -520,6 +520,6 @@ FodyWeavers.xsd
 *.sln.iml
 
 
-obj
-MishFit/obj
+obj/
+MishFit/obj/
 **/obj/
