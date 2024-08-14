@@ -7,6 +7,10 @@ public class ApplicationDbContext : DbContext
 {
     public DbSet<User> Users { get; init; }
     
+    public DbSet<MealType> MealTypes { get; init; }
+    
+    public DbSet<Food> Foods { get; init; }
+    
     private readonly IConfiguration _configuration;
     
     public ApplicationDbContext(IConfiguration configuration)

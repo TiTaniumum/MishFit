@@ -12,6 +12,10 @@ builder.Services.AddDbContext<ApplicationDbContext>();
 
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IUsersService, UsersService>();
+builder.Services.AddScoped<IMealsTypesRepository, MealsTypesRepository>();
+builder.Services.AddScoped<INutritionsRepository, NutritionsRepository>();
+builder.Services.AddScoped<IFoodsRepository, FoodsRepository>();
+builder.Services.AddScoped<IFoodsService, FoodsService>();
 
 builder.Services.AddHealthChecks();
 
