@@ -2,7 +2,7 @@
 
 namespace MishFit.Contracts;
 
-public abstract record CreateUserContract(
+public record CreateUserContract(
     [Required(ErrorMessage = "Login is required.")]
     [StringLength(30, MinimumLength = 6, ErrorMessage = "Login must be at least 6 characters long.")]
     String Login,

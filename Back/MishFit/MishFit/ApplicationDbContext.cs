@@ -6,6 +6,8 @@ namespace MishFit;
 public class ApplicationDbContext : DbContext
 {
     public DbSet<User> Users { get; init; }
+    public DbSet<Sleep> Sleeps { get; init; }
+    public DbSet<Activity> Activities { get; init; }
     
     private readonly IConfiguration _configuration;
     
