@@ -29,15 +29,10 @@ public class UsersRepository : IUsersRepository
     {
         if (await _context.Users.AnyAsync(u => u.Login == contract.Login))
             throw new ElementAlreadyExistsException($"User with login ${contract.Login} already exists.");
-        //
-        //
-        //
-        //
         
-        //
         var user = new User(contract);
 
-        await _context.AddAsync(user);
+        await _context.Users.AddAsync(user);
 
         await _context.SaveChangesAsync();
 

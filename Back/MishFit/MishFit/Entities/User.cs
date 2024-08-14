@@ -27,6 +27,7 @@ public class User
     {
         Id = Guid.NewGuid();
         Username = contract.Username;
+        Login = contract.Login;
         Password = new PasswordHasher<User>().HashPassword(this, contract.Password);
         RegistrationDate = DateTime.UtcNow;
     } 
