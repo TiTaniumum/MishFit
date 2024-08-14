@@ -7,16 +7,17 @@ import React, {
     useRef,
   } from "react";
   import AsyncStorage from "@react-native-async-storage/async-storage";
-
+  
   type GlobalContext = {
-    //-- поля и методы сюда
+    
   };
   
   const Context = createContext<GlobalContext>({} as GlobalContext);
   
   export function ContextProvider({ children }: { children: ReactNode }) {
-    // const [value , setValue] = useStete(...);
-
+    //const [value, setValue] = useState(...);
+    
+  
     return (
       <Context.Provider
         value={{

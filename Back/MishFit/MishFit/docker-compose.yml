@@ -1,0 +1,27 @@
+﻿volumes:
+  postgres_data:
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mishfit_app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=mishfit_db;Username=mishfit_user;Password=password
+
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_USER: mishfit_user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mishfit_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
