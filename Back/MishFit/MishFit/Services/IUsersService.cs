@@ -1,9 +1,9 @@
 ﻿using MishFit.Contracts;
 using MishFit.Entities;
 
-namespace MishFit.Repositories;
+namespace MishFit.Services;
 
-public interface IUsersRepository
+public interface IUsersService
 {
     Task<List<User>> GetAllUsersAsync();
     Task<User> GetUserByIdAsync(Guid id);

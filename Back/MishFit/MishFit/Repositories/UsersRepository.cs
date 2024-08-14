@@ -10,7 +10,7 @@ public class UsersRepository : IUsersRepository
 {
     private readonly ApplicationDbContext _context;
 
-    public UsersRepository(ApplicationDbContext context)
+    public UsersRepository(ApplicationDbContext context) 
     {
         _context = context;
     }
@@ -22,7 +22,7 @@ public class UsersRepository : IUsersRepository
 
     public async Task<User> GetUserByIdAsync(Guid id)
     {
-        return await _context.Users.FindAsync(id) ?? throw new ElementAlreadyExistsException($"User with id {id} not found.");
+        return await _context.Users.FindAsync(id) ?? throw new ElementAlreadyExistsException($"User with id {id} not found.");;
     }
 
     public async Task<User> CreateUserAsync(CreateUserContract contract)
@@ -42,21 +42,23 @@ public class UsersRepository : IUsersRepository
     public async Task<User> UpdateUserAsync(UpdateUserContract contract)
     {
         var user = await GetUserByIdAsync(contract.Id);
-        
+
         if (await _context.Users.AnyAsync(u => u.Login == contract.Login))
             throw new ElementAlreadyExistsException($"User with login ${contract.Login} already exists.");
 
         user.Login = contract.Login;
         user.Username = contract.Username;
-        user.Password = new PasswordHasher<User>().HashPassword(user, contract.Password);;
+        user.Password = new PasswordHasher<User>().HashPassword(user, contract.Password);
 
         await _context.SaveChangesAsync();
 
         return user;
     }
 
-    public Task DeleteUserByIdAsync()
+    public async Task DeleteUserByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var user = await GetUserByIdAsync(id);
+
+        _context.Users.Remove(user);
     }
 }

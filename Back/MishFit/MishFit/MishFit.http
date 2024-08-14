@@ -1,6 +1,10 @@
-@MishFit_HostAddress = http://localhost:5046
+@HostAddress = http://localhost:5046
 
-GET {{MishFit_HostAddress}}/weatherforecast/
+GET {{HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+// TODO: ADD
+
+POST {{}}
