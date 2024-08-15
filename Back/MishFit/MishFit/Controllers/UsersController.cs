@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using MishFit.Contracts;
 using MishFit.Entities;
 using MishFit.Exceptions;
@@ -51,26 +52,6 @@ public class UsersController : ControllerBase
         }
     }
 
-    [HttpPost]
-    public async Task<ActionResult<User>> CreateUserAsync([FromBody] CreateUserContract contract)
-    {
-        if (!ModelState.IsValid)
-            return StatusCode(StatusCodes.Status400BadRequest, "Invalid model state");
-
-        try
-        {
-            return StatusCode(StatusCodes.Status201Created, await _service.CreateUserAsync(contract));
-        }
-        catch (ElementAlreadyExistsException e)
-        {
-            return StatusCode(StatusCodes.Status400BadRequest, e.Message);
-        }
-        catch (Exception e)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-        }
-    }
-
     [HttpPut]
     public async Task<ActionResult<User>> UpdateUserAsync([FromBody] UpdateUserContract contract)
     {
@@ -106,6 +87,71 @@ public class UsersController : ControllerBase
         catch (ElementNotFoundException e)
         {
             return StatusCode(StatusCodes.Status404NotFound, e.Message);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+        }
+    }
+
+
+    // [HttpPost]
+    // public async Task<ActionResult<User>> CreateUserAsync([FromBody] CreateUserContract contract)
+    // {
+    //     if (!ModelState.IsValid)
+    //         return StatusCode(StatusCodes.Status400BadRequest, "Invalid model state");
+    //
+    //     try
+    //     {
+    //         return StatusCode(StatusCodes.Status201Created, await _service.CreateUserAsync(contract));
+    //     }
+    //     catch (ElementAlreadyExistsException e)
+    //     {
+    //         return StatusCode(StatusCodes.Status400BadRequest, e.Message);
+    //     }
+    //     catch (Exception e)
+    //     {
+    //         return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+    //     }
+    // }
+
+    [HttpPost("/Register")]
+    public async Task<ActionResult<User>> RegisterUserAsync([FromBody] RegisterUserContract contract)
+    {
+        if (!ModelState.IsValid)
+            return StatusCode(StatusCodes.Status400BadRequest, "Invalid model state");
+        try
+        {
+            return StatusCode(StatusCodes.Status201Created, await _service.RegisterUserAsync(contract));
+        }
+        
+        catch (ElementAlreadyExistsException e)
+        {
+            return StatusCode(StatusCodes.Status400BadRequest, e.Message);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+        }
+    }
+
+    [HttpPost("/Login")]
+    public async Task<ActionResult<TokenResponse>> LoginUserAsync([FromBody] LoginUserContract contract)
+    {
+        if (!ModelState.IsValid)
+            return StatusCode(StatusCodes.Status400BadRequest, "Invalid model state");
+        try
+        {
+            var token = await _service.LoginUserAsync(contract);
+            return StatusCode(StatusCodes.Status200OK, token);
+        }
+        catch (ElementNotFoundException e)
+        {
+            return StatusCode(StatusCodes.Status404NotFound, e.Message);
+        }
+        catch (AuthenticationFailedException e)
+        {
+            return StatusCode(StatusCodes.Status401Unauthorized, e.Message);
         }
         catch (Exception e)
         {
