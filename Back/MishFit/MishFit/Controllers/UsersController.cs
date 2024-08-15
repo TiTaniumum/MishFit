@@ -115,7 +115,8 @@ public class UsersController : ControllerBase
     //     }
     // }
 
-    [HttpPost("/Register")]
+    [HttpPost]
+    [Route("Register")]
     public async Task<ActionResult<User>> RegisterUserAsync([FromBody] RegisterUserContract contract)
     {
         if (!ModelState.IsValid)
@@ -135,7 +136,8 @@ public class UsersController : ControllerBase
         }
     }
 
-    [HttpPost("/Login")]
+    [HttpPost]
+    [Route("Login")]
     public async Task<ActionResult<TokenResponse>> LoginUserAsync([FromBody] LoginUserContract contract)
     {
         if (!ModelState.IsValid)
