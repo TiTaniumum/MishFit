@@ -15,7 +15,7 @@ public class User
     public String Username { get; set; } = string.Empty;
 
     [MaxLength(100)]
-    public String Password { get; set; } = string.Empty;
+    public String PasswordHash { get; set; } = string.Empty;
     
     public DateTime RegistrationDate { get; set; }
 
@@ -23,12 +23,21 @@ public class User
     {
     }
 
-    public User(CreateUserContract contract)
+    public User(Guid id, string username,string login ,string passwordHash)
     {
-        Id = Guid.NewGuid();
-        Username = contract.Username;
-        Login = contract.Login;
-        Password = new PasswordHasher<User>().HashPassword(this, contract.Password);
+        Id = id;
+        Username = username;
+        Login = login;
+        PasswordHash =passwordHash;
         RegistrationDate = DateTime.UtcNow;
-    } 
+    }
+
+    public static User Create(string userName, string login, string passwordHash)
+    {
+        return new User(Guid.NewGuid(), userName, login, passwordHash);
+    }
+    public static User Create(CreateUserContract contract)
+    {
+        return new User(Guid.NewGuid(), contract.Username, contract.Login, contract.PasswordHash);
+    }
 }

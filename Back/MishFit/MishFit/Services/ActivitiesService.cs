@@ -5,7 +5,7 @@ using MishFit.Repositories;
 
 namespace MishFit.Services;
 
-public class ActivitiesService
+public class ActivitiesService : IActivitiesService
 {
     private readonly IActivitiesRepository _repository;
 

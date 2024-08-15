@@ -22,16 +22,20 @@ public class UsersRepository : IUsersRepository
 
     public async Task<User> GetUserByIdAsync(Guid id)
     {
-        return await _context.Users.FindAsync(id) ?? throw new ElementAlreadyExistsException($"User with id {id} not found.");;
+        return await _context.Users.FindAsync(id) ?? throw new ElementNotFoundException($"User with id {id} not found.");;
     }
 
-    public async Task<User> CreateUserAsync(CreateUserContract contract)
+    public async Task<User> GetUserByLoginAsync(string login)
     {
-        if (await _context.Users.AnyAsync(u => u.Login == contract.Login))
-            throw new ElementAlreadyExistsException($"User with login ${contract.Login} already exists.");
-        
-        var user = new User(contract);
+        return await _context.Users.FirstOrDefaultAsync(u=>u.Login==login) ?? throw new ElementNotFoundException($"User with login {login} not found.");;
+    }
 
+    
+    public async Task<User> AddUserAsync(User user)
+    {
+        if (await _context.Users.AnyAsync(u => u.Login == user.Login))
+            throw new ElementAlreadyExistsException($"User with login ${user.Login} already exists.");
+        
         await _context.Users.AddAsync(user);
 
         await _context.SaveChangesAsync();
@@ -48,7 +52,7 @@ public class UsersRepository : IUsersRepository
 
         user.Login = contract.Login;
         user.Username = contract.Username;
-        user.Password = new PasswordHasher<User>().HashPassword(user, contract.Password);
+        user.PasswordHash = new PasswordHasher<User>().HashPassword(user, contract.Password);
 
         await _context.SaveChangesAsync();
 

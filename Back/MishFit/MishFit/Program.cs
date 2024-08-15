@@ -1,21 +1,37 @@
 using Microsoft.EntityFrameworkCore;
 using MishFit;
 using MishFit.Repositories;
+using MishFit.Security;
 using MishFit.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
+var configuration = builder.Configuration;
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+services.Configure<JwtOptions>(configuration.GetSection(nameof(JwtOptions)));
 
-builder.Services.AddDbContext<ApplicationDbContext>();
+services.AddEndpointsApiExplorer();
+services.AddSwaggerGen();
 
-builder.Services.AddScoped<IUsersRepository, UsersRepository>();
-builder.Services.AddScoped<IUsersService, UsersService>();
+services.AddDbContext<ApplicationDbContext>();
 
-builder.Services.AddHealthChecks();
 
-builder.Services.AddControllers();
+services.AddScoped<IUsersRepository, UsersRepository>();
+services.AddScoped<IActivitiesRepository, ActivitiesRepository>();
+services.AddScoped<ISleepRepository, SleepRepository>();
+
+services.AddScoped<IUsersService, UsersService>();
+services.AddScoped<IActivitiesService, ActivitiesService>();
+services.AddScoped<ISleepsService, SleepsService>();
+
+services.AddScoped<IJwtProvider, JwtProvider>();
+services.AddScoped<IPasswordHasher, PasswordHasher>();
+
+
+
+services.AddHealthChecks();
+
+services.AddControllers();
 
 builder.Logging.AddConsole();
 
