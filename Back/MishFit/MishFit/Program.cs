@@ -29,6 +29,11 @@ services.AddScoped<IPasswordHasher, PasswordHasher>();
 
 
 
+services.AddScoped<IMealsTypesRepository, MealsTypesRepository>();
+services.AddScoped<INutritionsRepository, NutritionsRepository>();
+services.AddScoped<IFoodsRepository, FoodsRepository>();
+services.AddScoped<IFoodsService, FoodsService>();
+
 services.AddHealthChecks();
 
 services.AddControllers();

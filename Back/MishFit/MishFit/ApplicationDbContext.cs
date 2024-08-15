@@ -9,6 +9,12 @@ public class ApplicationDbContext : DbContext
     public DbSet<Sleep> Sleeps { get; init; }
     public DbSet<Activity> Activities { get; init; }
     
+    public DbSet<MealType> MealTypes { get; init; }
+    
+    public DbSet<Food> Foods { get; init; }
+    
+    public DbSet<Nutrition> Nutritions { get; init; }
+    
     private readonly IConfiguration _configuration;
     
     public ApplicationDbContext(IConfiguration configuration)
