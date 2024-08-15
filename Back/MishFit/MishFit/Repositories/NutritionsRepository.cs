@@ -15,10 +15,9 @@ public class NutritionsRepository : INutritionsRepository
         _mealsTypesRepository = mealsTypesRepository;
     }
 
-    public async Task<Nutrition> CreateNutritionAsync(CreateNutritionContract contract)
+    public Task<Nutrition> CreateNutritionAsync(CreateNutritionContract contract)
     {
-        var mealType = await _mealsTypesRepository.GetMealTypeById(contract.MealTypeId);
-
-        return null;
+        // Решил не выполнять, так как потом все равно переписывать.
+        throw new NotImplementedException();
     }
 }
