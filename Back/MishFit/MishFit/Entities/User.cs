@@ -44,18 +44,4 @@ public class User
         WeightGoal = weightGoal;
         RegistrationDate = DateTime.UtcNow;
     }
-
-
-    // public User(RegisterUserContract contract)
-    // {
-    //     Id = Guid.NewGuid();
-    //     Email = contract.Email;
-    //     Sex = contract.Sex ?? Enums.Sex.NotStated;
-    //     BirthDay = contract.BirthDay;
-    //     Weight = contract.Weight;
-    //     Height = contract.Height;
-    //     StepsGoal = contract.StepsGoal;
-    //     WeightGoal = contract.WeightGoal;
-    //     RegistrationDate = DateTime.UtcNow;
-    // }
 }
