@@ -15,7 +15,7 @@ public class User
 
     public Sex? Sex { get; set; }
     
-    public DateTime? BirthDay { get; set; }
+    public DateTime? BirthDate { get; set; }
 
     public decimal? Weight { get; set; }
 
@@ -30,14 +30,14 @@ public class User
     {
     }
 
-    public User(String email, String passwordHash, Sex? sex, DateTime? birthDay, decimal? weight,
+    public User(String email, String passwordHash, Sex? sex, DateTime? birthDate, decimal? weight,
         decimal? height, decimal? stepsGoal, decimal? weightGoal)
     {
         Id = Guid.NewGuid();
         Email = email;
         PasswordHash = passwordHash;
         Sex = sex;
-        BirthDay = birthDay;
+        BirthDate = birthDate;
         Weight = weight;
         Height = height;
         StepsGoal = stepsGoal;

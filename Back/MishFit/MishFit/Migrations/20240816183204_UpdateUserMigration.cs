@@ -21,7 +21,7 @@ namespace MishFit.Migrations
                 newName: "Email");
 
             migrationBuilder.AddColumn<DateTime>(
-                name: "BirthDay",
+                name: "BirthDate",
                 table: "Users",
                 type: "timestamp with time zone",
                 nullable: true);
@@ -61,7 +61,7 @@ namespace MishFit.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "BirthDay",
+                name: "BirthDate",
                 table: "Users");
 
             migrationBuilder.DropColumn(

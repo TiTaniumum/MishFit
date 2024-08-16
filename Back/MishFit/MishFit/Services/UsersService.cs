@@ -39,7 +39,7 @@ public class UsersService : IUsersService
     {
         var hashedPassword = _passwordHasher.Generate(contract.Password);
 
-        var user = new User(contract.Email, hashedPassword, contract.Sex, contract.BirthDay, contract.Weight,
+        var user = new User(contract.Email, hashedPassword, contract.Sex, contract.BirthDate, contract.Weight,
             contract.Height,
             contract.StepsGoal, contract.WeightGoal);
         return await _repository.AddUserAsync(user);

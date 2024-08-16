@@ -13,7 +13,7 @@ public record RegisterUserContract(
     String Password,
     
     Sex? Sex,
-    DateTime? BirthDay,
+    DateTime? BirthDate,
     decimal? Weight,
     decimal? Height,
     int? StepsGoal,

@@ -13,8 +13,8 @@ public record CreateUserContract(
     [StringLength(100, MinimumLength = 6, ErrorMessage = "Password must be at least 6 characters long.")]
     String PasswordHash,
     
-    Sex Sex,
-    DateTime? BirthDay,
+    Sex? Sex,
+    DateTime? BirthDate,
     decimal? Weight,
     decimal? Height,
     int? StepsGoal,
