@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices.JavaScript;
 using Microsoft.AspNetCore.Identity;
 using MishFit.Contracts;
+using MishFit.Enums;
 
 namespace MishFit.Entities;
 
@@ -8,36 +10,52 @@ public class User
 {
     public Guid Id { get; set; }
 
-    [MaxLength(100)]
-    public String Login { get; set; } = string.Empty;
+    [MaxLength(100)] public String Email { get; set; } = string.Empty;
+    [MaxLength(100)] public String PasswordHash { get; set; } = string.Empty;
 
-    [MaxLength(100)]
-    public String Username { get; set; } = string.Empty;
-
-    [MaxLength(100)]
-    public String PasswordHash { get; set; } = string.Empty;
+    public Sex? Sex { get; set; }
     
-    public DateTime RegistrationDate { get; set; }
+    public DateTime? BirthDay { get; set; }
 
-    private User()
+    public decimal? Weight { get; set; }
+
+    public decimal? Height { get; set; }
+
+    public decimal? StepsGoal { get; set; }
+
+    public decimal? WeightGoal { get; set; }
+    public DateTime RegistrationDate { get; init; }
+
+    protected User()
     {
     }
 
-    public User(Guid id, string username,string login ,string passwordHash)
+    public User(String email, String passwordHash, Sex? sex, DateTime? birthDay, decimal? weight,
+        decimal? height, decimal? stepsGoal, decimal? weightGoal)
     {
-        Id = id;
-        Username = username;
-        Login = login;
-        PasswordHash =passwordHash;
+        Id = Guid.NewGuid();
+        Email = email;
+        PasswordHash = passwordHash;
+        Sex = sex;
+        BirthDay = birthDay;
+        Weight = weight;
+        Height = height;
+        StepsGoal = stepsGoal;
+        WeightGoal = weightGoal;
         RegistrationDate = DateTime.UtcNow;
     }
 
-    public static User Create(string userName, string login, string passwordHash)
-    {
-        return new User(Guid.NewGuid(), userName, login, passwordHash);
-    }
-    public static User Create(CreateUserContract contract)
-    {
-        return new User(Guid.NewGuid(), contract.Username, contract.Login, contract.PasswordHash);
-    }
+
+    // public User(RegisterUserContract contract)
+    // {
+    //     Id = Guid.NewGuid();
+    //     Email = contract.Email;
+    //     Sex = contract.Sex ?? Enums.Sex.NotStated;
+    //     BirthDay = contract.BirthDay;
+    //     Weight = contract.Weight;
+    //     Height = contract.Height;
+    //     StepsGoal = contract.StepsGoal;
+    //     WeightGoal = contract.WeightGoal;
+    //     RegistrationDate = DateTime.UtcNow;
+    // }
 }
