@@ -1,16 +1,19 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using MishFit.Enums;
 
 namespace MishFit.Contracts;
 
 public record UpdateActivityContract(
     [Required(ErrorMessage = "Id is required.")]
     Guid Id,
-    [Required(ErrorMessage = "Time is required.")]
-    DateTime Time,
+    
+    [Required(ErrorMessage = "Name is required.")]
+    [StringLength(30, MinimumLength = 3, ErrorMessage = "Name must be at least 3 characters long.")]
+    string Name,
+    
     [Required(ErrorMessage = "ActivityType is required.")]
-    string ActivityType,
-    [Required(ErrorMessage = "Duration is required.")]
-    int Duration,
-    [Required(ErrorMessage = "CaloriesBurned is required.")]
-    int CaloriesBurned
+    ActivityType ActivityType,
+    
+    [Required(ErrorMessage = "Calories is required.")]
+    int Calories
 );

@@ -1,26 +1,20 @@
 ﻿using MishFit.Contracts;
-using MishFit.Enums;
 
 namespace MishFit.Entities;
 
-public class Activity
+public class Meal
 {
     public Guid Id { get; set; }
 
     public string Name { get; set; } = string.Empty;
 
-    public ActivityType ActivityType { get; set; }
-
     public int Calories { get; set; } = 0;
 
-    private Activity()
-    {
-    }
+    private Meal() {}
 
-    public Activity(CreateActivityContract contract)
+    public Meal(CreateMealContract contract)
     {
         Name = contract.Name;
-        ActivityType = contract.ActivityType;
         Calories = contract.Calories;
     }
 }
