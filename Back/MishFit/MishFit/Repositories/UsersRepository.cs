@@ -50,7 +50,7 @@ public class UsersRepository : IUsersRepository
         //     throw new ElementAlreadyExistsException($"User with email ${contract.Email} already exists.");
 
         user.Sex = contract.Sex ?? user.Sex;
-        user.BirthDate = contract.BirthDay ?? user.BirthDate;
+        user.BirthDate = contract.BirthDate ?? user.BirthDate;
         user.Weight = contract.Weight ?? user.Weight;
         user.Height = contract.Height ?? user.Height;
         user.StepsGoal = contract.StepsGoal ?? user.StepsGoal;
