@@ -68,5 +68,7 @@ public class UsersRepository : IUsersRepository
         var user = await GetUserByIdAsync(id);
 
         _context.Users.Remove(user);
+
+        await _context.SaveChangesAsync();
     }
 }
