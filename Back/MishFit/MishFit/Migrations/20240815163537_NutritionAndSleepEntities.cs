@@ -11,21 +11,7 @@ namespace MishFit.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Activities",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Time = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    ActivityType = table.Column<string>(type: "text", nullable: false),
-                    Duration = table.Column<int>(type: "integer", nullable: false),
-                    CaloriesBurned = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Activities", x => x.Id);
-                });
-
+            
             migrationBuilder.CreateTable(
                 name: "MealTypes",
                 columns: table => new
@@ -37,22 +23,6 @@ namespace MishFit.Migrations
                 {
                     table.PrimaryKey("PK_MealTypes", x => x.Id);
                 });
-
-            migrationBuilder.CreateTable(
-                name: "Sleeps",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Duration = table.Column<int>(type: "integer", nullable: false),
-                    SleepQlt = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Sleeps", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Nutritions",
                 columns: table => new
@@ -105,14 +75,9 @@ namespace MishFit.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Activities");
 
             migrationBuilder.DropTable(
                 name: "Foods");
-
-            migrationBuilder.DropTable(
-                name: "Sleeps");
 
             migrationBuilder.DropTable(
                 name: "Nutritions");

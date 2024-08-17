@@ -132,10 +132,16 @@ namespace MishFit.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Login")
+                    b.Property<DateTime?>("BirthDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
+
+                    b.Property<decimal?>("Height")
+                        .HasColumnType("numeric");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
@@ -145,10 +151,17 @@ namespace MishFit.Migrations
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                    b.Property<int?>("Sex")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal?>("StepsGoal")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("Weight")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("WeightGoal")
+                        .HasColumnType("numeric");
 
                     b.HasKey("Id");
 

@@ -25,16 +25,15 @@ public class UsersRepository : IUsersRepository
         return await _context.Users.FindAsync(id) ?? throw new ElementNotFoundException($"User with id {id} not found.");;
     }
 
-    public async Task<User> GetUserByLoginAsync(string login)
+    public async Task<User> GetUserByEmailAsync(string email)
     {
-        return await _context.Users.FirstOrDefaultAsync(u=>u.Login==login) ?? throw new ElementNotFoundException($"User with login {login} not found.");;
+        return await _context.Users.FirstOrDefaultAsync(u=>u.Email==email) ?? throw new ElementNotFoundException($"User with email {email} not found.");;
     }
-
     
     public async Task<User> AddUserAsync(User user)
     {
-        if (await _context.Users.AnyAsync(u => u.Login == user.Login))
-            throw new ElementAlreadyExistsException($"User with login ${user.Login} already exists.");
+        if (await _context.Users.AnyAsync(u => u.Email == user.Email))
+            throw new ElementAlreadyExistsException($"User with email ${user.Email} already exists.");
         
         await _context.Users.AddAsync(user);
 
@@ -42,16 +41,21 @@ public class UsersRepository : IUsersRepository
 
         return user;
     }
-
+    
     public async Task<User> UpdateUserAsync(UpdateUserContract contract)
     {
         var user = await GetUserByIdAsync(contract.Id);
 
-        if (await _context.Users.AnyAsync(u => u.Login == contract.Login))
-            throw new ElementAlreadyExistsException($"User with login ${contract.Login} already exists.");
+        // if (await _context.Users.AnyAsync(u => u.Email == contract.Email)) // В бд аналитики решили не изменять email
+        //     throw new ElementAlreadyExistsException($"User with email ${contract.Email} already exists.");
 
-        user.Login = contract.Login;
-        user.Username = contract.Username;
+        user.Sex = contract.Sex ?? user.Sex;
+        user.BirthDate = contract.BirthDay ?? user.BirthDate;
+        user.Weight = contract.Weight ?? user.Weight;
+        user.Height = contract.Height ?? user.Height;
+        user.StepsGoal = contract.StepsGoal ?? user.StepsGoal;
+        user.WeightGoal = contract.WeightGoal ?? user.WeightGoal;
+        
         user.PasswordHash = new PasswordHasher<User>().HashPassword(user, contract.Password);
 
         await _context.SaveChangesAsync();

@@ -93,27 +93,7 @@ public class UsersController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
         }
     }
-
-
-    // [HttpPost]
-    // public async Task<ActionResult<User>> CreateUserAsync([FromBody] CreateUserContract contract)
-    // {
-    //     if (!ModelState.IsValid)
-    //         return StatusCode(StatusCodes.Status400BadRequest, "Invalid model state");
-    //
-    //     try
-    //     {
-    //         return StatusCode(StatusCodes.Status201Created, await _service.CreateUserAsync(contract));
-    //     }
-    //     catch (ElementAlreadyExistsException e)
-    //     {
-    //         return StatusCode(StatusCodes.Status400BadRequest, e.Message);
-    //     }
-    //     catch (Exception e)
-    //     {
-    //         return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-    //     }
-    // }
+    
 
     [HttpPost]
     [Route("Register")]
