@@ -12,7 +12,7 @@ public record UpdateUserContract(
     String Password,
     
     Sex? Sex,
-    DateTime? BirthDay,
+    DateTime? BirthDate,
     decimal? Weight,
     decimal? Height,
     int? StepsGoal,
