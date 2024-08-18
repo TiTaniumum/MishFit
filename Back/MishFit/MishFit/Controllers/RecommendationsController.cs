@@ -8,11 +8,11 @@ namespace MishFit.Controllers;
 
 [ApiController]
 [Route(("/api/v1/[controller]"))]
-public class RecommendationController : ControllerBase
+public class RecommendationsController : ControllerBase
 {
     private readonly IRecommendationsService _service;
 
-    public RecommendationController(IRecommendationsService service)
+    public RecommendationsController(IRecommendationsService service)
     {
         _service = service;
     }
