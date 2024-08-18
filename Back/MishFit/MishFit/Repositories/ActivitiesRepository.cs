@@ -22,7 +22,7 @@ public class ActivitiesRepository : IActivitiesRepository
     public async Task<Activity> GetActivityByIdAsync(Guid id)
     {
         return await _context.Activities.FindAsync(id) ??
-               throw new ElementAlreadyExistsException($"Activity with id {id} not found.");
+               throw new ElementNotFoundException($"Activity with id {id} not found.");
         ;
     }
 
@@ -54,5 +54,6 @@ public class ActivitiesRepository : IActivitiesRepository
     {
         var activity = await GetActivityByIdAsync(id);
         _context.Activities.Remove(activity);
+        await _context.SaveChangesAsync();
     }
 }

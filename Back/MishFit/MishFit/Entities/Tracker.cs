@@ -1,10 +1,12 @@
-﻿using MishFit.Enums;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using MishFit.Enums;
 
 namespace MishFit.Entities;
 
 
 public class Tracker
 {
+
     public Guid Id { get; set; }
 
     public Guid UserId { get; set; }
@@ -22,7 +24,7 @@ public class Tracker
     public int? ActivityId { get; set; }
     
     public Activity? Activity { get; set; }
-    
+
     public ActivityType? ActivityType { get; set; }
     
     public int? ActivityTimespan { get; set; }
@@ -41,6 +43,8 @@ public class Tracker
     
     public DateTime? DeleteDateTime { get; set; }
     
-    public Tracker(){}
+    private Tracker(){}
+    
+    
     
 }

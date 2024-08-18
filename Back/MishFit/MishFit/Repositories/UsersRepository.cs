@@ -10,7 +10,7 @@ public class UsersRepository : IUsersRepository
 {
     private readonly ApplicationDbContext _context;
 
-    public UsersRepository(ApplicationDbContext context) 
+    public UsersRepository(ApplicationDbContext context)
     {
         _context = context;
     }
@@ -22,26 +22,29 @@ public class UsersRepository : IUsersRepository
 
     public async Task<User> GetUserByIdAsync(Guid id)
     {
-        return await _context.Users.FindAsync(id) ?? throw new ElementNotFoundException($"User with id {id} not found.");;
+        return await _context.Users.FindAsync(id) ??
+               throw new ElementNotFoundException($"User with id {id} not found.");
     }
 
     public async Task<User> GetUserByEmailAsync(string email)
     {
-        return await _context.Users.FirstOrDefaultAsync(u=>u.Email==email) ?? throw new ElementNotFoundException($"User with email {email} not found.");;
+        return await _context.Users.FirstOrDefaultAsync(u => u.Email == email) ??
+               throw new ElementNotFoundException($"User with email {email} not found.");
+        ;
     }
-    
+
     public async Task<User> AddUserAsync(User user)
     {
         if (await _context.Users.AnyAsync(u => u.Email == user.Email))
             throw new ElementAlreadyExistsException($"User with email ${user.Email} already exists.");
-        
+
         await _context.Users.AddAsync(user);
 
         await _context.SaveChangesAsync();
 
         return user;
     }
-    
+
     public async Task<User> UpdateUserAsync(UpdateUserContract contract)
     {
         var user = await GetUserByIdAsync(contract.Id);
@@ -55,7 +58,7 @@ public class UsersRepository : IUsersRepository
         user.Height = contract.Height ?? user.Height;
         user.StepsGoal = contract.StepsGoal ?? user.StepsGoal;
         user.WeightGoal = contract.WeightGoal ?? user.WeightGoal;
-        
+
         user.PasswordHash = new PasswordHasher<User>().HashPassword(user, contract.Password);
 
         await _context.SaveChangesAsync();
@@ -68,5 +71,7 @@ public class UsersRepository : IUsersRepository
         var user = await GetUserByIdAsync(id);
 
         _context.Users.Remove(user);
+
+        await _context.SaveChangesAsync();
     }
 }

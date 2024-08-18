@@ -1,7 +1,9 @@
-﻿using MishFit.Contracts;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using MishFit.Contracts;
 using MishFit.Enums;
 
 namespace MishFit.Entities;
+
 
 public class Activity
 {

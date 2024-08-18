@@ -18,27 +18,52 @@ services.AddDbContext<ApplicationDbContext>();
 
 services.AddScoped<IUsersRepository, UsersRepository>();
 services.AddScoped<IActivitiesRepository, ActivitiesRepository>();
-services.AddScoped<ISleepRepository, SleepRepository>();
+services.AddScoped<IMealsRepository, MealsRepository>();
 
 services.AddScoped<IUsersService, UsersService>();
 services.AddScoped<IActivitiesService, ActivitiesService>();
-services.AddScoped<ISleepsService, SleepsService>();
+
+
+services.AddScoped<ITrackerRepository, TrackerRepository>();
 
 services.AddScoped<IJwtProvider, JwtProvider>();
 services.AddScoped<IPasswordHasher, PasswordHasher>();
-
-
-
-services.AddScoped<IMealsTypesRepository, MealsTypesRepository>();
-services.AddScoped<INutritionsRepository, NutritionsRepository>();
-services.AddScoped<IFoodsRepository, FoodsRepository>();
-services.AddScoped<IFoodsService, FoodsService>();
 
 services.AddHealthChecks();
 
 services.AddControllers();
 
 builder.Logging.AddConsole();
+
+services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+        Name = "Authorization",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+
+    options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement()
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                },
+                Scheme = "oauth2",
+                Name = "Bearer",
+                In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+            },
+            new List<string>()
+        }
+    });
+});
 
 var app = builder.Build();
 
@@ -55,6 +80,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+
 
 app.UseRouting();
 

@@ -1,6 +1,8 @@
-﻿using MishFit.Contracts;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using MishFit.Contracts;
 
 namespace MishFit.Entities;
+
 
 public class Meal
 {
