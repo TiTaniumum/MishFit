@@ -6,14 +6,13 @@ namespace MishFit;
 public class ApplicationDbContext : DbContext
 {
     public DbSet<User> Users { get; init; }
-    public DbSet<Sleep> Sleeps { get; init; }
+
+    public DbSet<Meal> Meals { get; init; }
+    
     public DbSet<Activity> Activities { get; init; }
     
-    public DbSet<MealType> MealTypes { get; init; }
+    public DbSet<Tracker> Trackers { get; init; }
     
-    public DbSet<Food> Foods { get; init; }
-    
-    public DbSet<Nutrition> Nutritions { get; init; }
     
     public DbSet<Recommendation> Recommendations { get; init; }
     

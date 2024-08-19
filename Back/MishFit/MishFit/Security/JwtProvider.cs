@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using MishFit.Entities;
+using MishFit.Exceptions;
 
 namespace MishFit.Security;
 
@@ -31,5 +32,31 @@ public class JwtProvider : IJwtProvider
         );
         var tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
         return tokenValue;
+    }
+    
+    public string? GetUserIdFromToken(string token)
+    {
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var key = Encoding.UTF8.GetBytes(_options.SecretKey);
+
+        try
+        {
+            var principal = tokenHandler.ValidateToken(token, new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ClockSkew = TimeSpan.Zero
+            }, out SecurityToken validatedToken);
+
+            var userIdClaim = principal.FindFirst("userId");
+
+            return userIdClaim?.Value;
+        }
+        catch
+        {
+            throw new InvalidIncomingParameterException("Token validation error!");
+        }
     }
 }
