@@ -47,7 +47,7 @@ namespace MishFit.Migrations
                     TrackerType = table.Column<int>(type: "integer", nullable: false),
                     MealId = table.Column<Guid>(type: "uuid", nullable: true),
                     MealGrams = table.Column<int>(type: "integer", nullable: true),
-                    ActivityId = table.Column<int>(type: "integer", nullable: true),
+                    ActivityId = table.Column<Guid>(type: "uuid", nullable: true),
                     ActivityId1 = table.Column<Guid>(type: "uuid", nullable: true),
                     ActivityType = table.Column<int>(type: "integer", nullable: true),
                     ActivityTimespan = table.Column<int>(type: "integer", nullable: true),

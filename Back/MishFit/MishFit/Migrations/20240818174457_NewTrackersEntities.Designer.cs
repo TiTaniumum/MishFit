@@ -70,8 +70,8 @@ namespace MishFit.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<int?>("ActivityId")
-                        .HasColumnType("integer");
+                    b.Property<Guid?>("ActivityId")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("ActivityId1")
                         .HasColumnType("uuid");

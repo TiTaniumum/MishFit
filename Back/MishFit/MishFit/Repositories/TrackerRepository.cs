@@ -12,17 +12,20 @@ public class TrackerRepository : ITrackerRepository
     private readonly ApplicationDbContext _context;
 
     private readonly IActivitiesRepository _activitiesRepository;
+    private readonly IUsersRepository _usersRepository;
 
     private readonly IMealsRepository _mealsRepository;
 
     private readonly IJwtProvider _jwtProvider;
 
-    public TrackerRepository(ApplicationDbContext context, IMealsRepository mealsRepository, IJwtProvider jwtProvider)
+    public TrackerRepository(ApplicationDbContext context, IActivitiesRepository activitiesRepository, IMealsRepository mealsRepository, IJwtProvider jwtProvider,
+        IUsersRepository usersRepository)
     {
         _context = context;
-        // _activitiesRepository = activitiesRepository;
+        _activitiesRepository = activitiesRepository;
         _mealsRepository = mealsRepository;
         _jwtProvider = jwtProvider;
+        _usersRepository = usersRepository;
     }
 
     public async Task<List<Tracker>> GetAllTrackersAsync()
@@ -50,37 +53,90 @@ public class TrackerRepository : ITrackerRepository
         return filteredTrackers;
     }
 
-    public async Task<Tracker?> AddCalorieTracker(CreateCalorieTrackerContract contract, string token)
+    public async Task<Tracker> AddCalorieTracker(CreateCalorieTrackerContract contract, string token)
     {
+        var userId = new Guid(
+            _jwtProvider.GetUserIdFromToken(token) ?? "");
+        var user = await _usersRepository.GetUserByIdAsync(userId);
+
         var meal = await _mealsRepository.GetMealByIdAsync(contract.MealId);
 
-        var userId = _jwtProvider.GetUserIdFromToken(token);
 
-        //
-        // var tracker = new Tracker
-        // {
-        //     TrackerType = TrackerType.Calorie,
-        //     MealId = contract.MealId,
-        //     Meal = meal,
-        //     MealGrams = contract.MealGrams,
-        //     TrackerDateTime = DateTime.Now
-        // };
-        //
-        // await _context.Trackers.AddAsync(tracker);
-        // await _context.SaveChangesAsync();
-        //
-        return null;
+        var tracker = new Tracker(
+            userId,
+            user,
+            TrackerType.Calorie,
+            contract.MealId,
+            meal,
+            contract.MealGrams
+        );
+
+        await _context.Trackers.AddAsync(tracker);
+        await _context.SaveChangesAsync();
+
+        return tracker;
     }
 
-    // public async Task<Tracker> AddActivityTracker(CreateActivityTrackerContract contract, string token)
-    // {
-    //     var activity = await _activitiesRepository.GetActivityByIdAsync(contract.ActivityId);
-    //     
-    //     var tracker = new Tracker
-    //     {
-    //         TrackerType = TrackerType.Activity,
-    //         
-    //         TrackerDateTime = DateTime.Now
-    //     };
-    // }
+    public async Task<Tracker> AddActivityTracker(CreateActivityTrackerContract contract, string token)
+    {
+        var userId = new Guid(
+            _jwtProvider.GetUserIdFromToken(token) ?? "");
+        var user = await _usersRepository.GetUserByIdAsync(userId);
+
+        var activity = await _activitiesRepository.GetActivityByIdAsync(contract.ActivityId);
+
+        var tracker = new Tracker(
+            userId,
+            user,
+            TrackerType.Activity,
+            contract.ActivityId,
+            activity,
+            contract.ActivityType,
+            contract.ActivityTimespan,
+            contract.ActivitySets,
+            contract.ActivityRepetitions
+        );
+
+        await _context.Trackers.AddAsync(tracker);
+        await _context.SaveChangesAsync();
+
+        return tracker;
+    }
+
+    public async Task<Tracker> AddSleepTracker(CreateSleepTrackerContract contract, string token)
+    {
+        var userId = new Guid(
+            _jwtProvider.GetUserIdFromToken(token) ?? "");
+        var user = await _usersRepository.GetUserByIdAsync(userId);
+
+        var tracker = new Tracker(
+            userId,
+            user,
+            TrackerType.Sleep,
+            contract.SleepBegin,
+            contract.SleepEnd
+        );
+        await _context.Trackers.AddAsync(tracker);
+        await _context.SaveChangesAsync();
+
+        return tracker;
+    }
+
+    public async Task<Tracker> UpdateSleepQuality(UpdateSleepTrackerContract contract)
+    {
+        var tracker = await GetTrackerByIdAsync(contract.TrackerId);
+        tracker.SleepQuality = contract.SleepQuality;
+
+        await _context.SaveChangesAsync();
+        return tracker;
+    }
+
+    public async Task<Tracker> DeleteTracker(Guid trackerId)
+    {
+        var tracker = await GetTrackerByIdAsync(trackerId);
+        tracker.DeleteDateTime = DateTime.UtcNow;
+        
+        await _context.SaveChangesAsync();
+        return tracker;
+    }
 }

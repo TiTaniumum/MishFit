@@ -19,12 +19,13 @@ services.AddDbContext<ApplicationDbContext>();
 services.AddScoped<IUsersRepository, UsersRepository>();
 services.AddScoped<IActivitiesRepository, ActivitiesRepository>();
 services.AddScoped<IMealsRepository, MealsRepository>();
+services.AddScoped<ITrackerRepository, TrackerRepository>();
 
 services.AddScoped<IUsersService, UsersService>();
 services.AddScoped<IActivitiesService, ActivitiesService>();
+services.AddScoped<ITrackerService, TrackerService>();
 
 
-services.AddScoped<ITrackerRepository, TrackerRepository>();
 
 services.AddScoped<IJwtProvider, JwtProvider>();
 services.AddScoped<IPasswordHasher, PasswordHasher>();
