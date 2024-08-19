@@ -15,6 +15,8 @@ public class ApplicationDbContext : DbContext
     
     public DbSet<Nutrition> Nutritions { get; init; }
     
+    public DbSet<Recommendation> Recommendations { get; init; }
+    
     private readonly IConfiguration _configuration;
     
     public ApplicationDbContext(IConfiguration configuration)

@@ -15,7 +15,6 @@ services.AddSwaggerGen();
 
 services.AddDbContext<ApplicationDbContext>();
 
-
 services.AddScoped<IUsersRepository, UsersRepository>();
 services.AddScoped<IActivitiesRepository, ActivitiesRepository>();
 services.AddScoped<ISleepRepository, SleepRepository>();
@@ -27,12 +26,12 @@ services.AddScoped<ISleepsService, SleepsService>();
 services.AddScoped<IJwtProvider, JwtProvider>();
 services.AddScoped<IPasswordHasher, PasswordHasher>();
 
-
-
 services.AddScoped<IMealsTypesRepository, MealsTypesRepository>();
 services.AddScoped<INutritionsRepository, NutritionsRepository>();
 services.AddScoped<IFoodsRepository, FoodsRepository>();
 services.AddScoped<IFoodsService, FoodsService>();
+builder.Services.AddScoped<IRecommendationsRepository, RecommendationsRepository>();
+builder.Services.AddScoped<IRecommendationsService, RecommendationsService>();
 
 services.AddHealthChecks();
 
