@@ -7,7 +7,7 @@ using MishFit.Security;
 
 namespace MishFit.Repositories;
 
-public class TrackerRepository : ITrackerRepository
+public class TrackersesRepository : ITrackersRepository
 {
     private readonly ApplicationDbContext _context;
 
@@ -18,7 +18,7 @@ public class TrackerRepository : ITrackerRepository
 
     private readonly IJwtProvider _jwtProvider;
 
-    public TrackerRepository(ApplicationDbContext context, IActivitiesRepository activitiesRepository, IMealsRepository mealsRepository, IJwtProvider jwtProvider,
+    public TrackersesRepository(ApplicationDbContext context, IActivitiesRepository activitiesRepository, IMealsRepository mealsRepository, IJwtProvider jwtProvider,
         IUsersRepository usersRepository)
     {
         _context = context;
@@ -43,16 +43,14 @@ public class TrackerRepository : ITrackerRepository
     {
         var userId = new Guid(
             _jwtProvider.GetUserIdFromToken(token) ?? "");
-
-        var trackers = await GetAllTrackersAsync();
-
-        var filteredTrackers = trackers.FindAll(t =>
+        
+        var filteredTrackers = await _context.Trackers.Where(t =>
             t.UserId == userId && t.TrackerType == contract.TrackerType && t.TrackerDateTime >= contract.DateFrom &&
-            t.TrackerDateTime <= contract.DateTo);
+            t.TrackerDateTime <= contract.DateTo).ToListAsync();
 
         return filteredTrackers;
     }
-
+    
     public async Task<Tracker> AddCalorieTracker(CreateCalorieTrackerContract contract, string token)
     {
         var userId = new Guid(
@@ -82,9 +80,9 @@ public class TrackerRepository : ITrackerRepository
         var userId = new Guid(
             _jwtProvider.GetUserIdFromToken(token) ?? "");
         var user = await _usersRepository.GetUserByIdAsync(userId);
-
+        
         var activity = await _activitiesRepository.GetActivityByIdAsync(contract.ActivityId);
-
+        
         var tracker = new Tracker(
             userId,
             user,
@@ -102,7 +100,7 @@ public class TrackerRepository : ITrackerRepository
 
         return tracker;
     }
-
+    
     public async Task<Tracker> AddSleepTracker(CreateSleepTrackerContract contract, string token)
     {
         var userId = new Guid(

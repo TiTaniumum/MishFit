@@ -21,6 +21,7 @@ public class Activity
 
     public Activity(CreateActivityContract contract)
     {
+        Id = Guid.NewGuid();
         Name = contract.Name;
         ActivityType = contract.ActivityType;
         Calories = contract.Calories;

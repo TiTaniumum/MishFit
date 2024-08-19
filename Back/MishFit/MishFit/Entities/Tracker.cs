@@ -47,6 +47,7 @@ public class Tracker
 
     public Tracker(Guid userId, User user, TrackerType trackerType, Guid mealId, Meal meal, int mealGrams)
     {
+        Id = Guid.NewGuid();
         UserId = userId;
         User = user;
         TrackerType = trackerType;
@@ -67,6 +68,7 @@ public class Tracker
         int activitySets,
         int activityRepetitions)
     {
+        Id = Guid.NewGuid();
         UserId = userId;
         User = user;
         TrackerType = trackerType;
@@ -81,6 +83,7 @@ public class Tracker
 
     public Tracker(Guid userId, User user, TrackerType trackerType, DateTime sleepBegin, DateTime sleepEnd)
     {
+        Id = Guid.NewGuid();
         UserId = userId;
         User = user;
         TrackerType = trackerType;

@@ -3,7 +3,7 @@ using MishFit.Entities;
 
 namespace MishFit.Repositories;
 
-public interface ITrackerRepository
+public interface ITrackersRepository
 {
     Task<List<Tracker>> GetAllTrackersAsync();
     Task<Tracker> GetTrackerByIdAsync(Guid id);

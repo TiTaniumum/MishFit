@@ -23,12 +23,12 @@ services.AddDbContext<ApplicationDbContext>();
 services.AddScoped<IUsersRepository, UsersRepository>();
 services.AddScoped<IActivitiesRepository, ActivitiesRepository>();
 services.AddScoped<IMealsRepository, MealsRepository>();
-services.AddScoped<ITrackerRepository, TrackerRepository>();
+services.AddScoped<ITrackersRepository, TrackersesRepository>();
 
 services.AddScoped<IUsersService, UsersService>();
 services.AddScoped<IMealsService, MealsService>();
 services.AddScoped<IActivitiesService, ActivitiesService>();
-services.AddScoped<ITrackerService, TrackerService>();
+services.AddScoped<ITrackersService, TrackersService>();
 
 
 

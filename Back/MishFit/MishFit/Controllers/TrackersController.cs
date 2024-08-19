@@ -12,11 +12,11 @@ namespace MishFit.Controllers;
 
 [ApiController]
 [Route(("/api/v1/[controller]"))]
-public class TrackerController : ControllerBase
+public class TrackersController : ControllerBase
 {
-    private readonly ITrackerService _service;
+    private readonly ITrackersService _service;
 
-    public TrackerController(ITrackerService service)
+    public TrackersController(ITrackersService service)
     {
         _service = service;
     }

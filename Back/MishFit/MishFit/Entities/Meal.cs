@@ -16,6 +16,7 @@ public class Meal
 
     public Meal(CreateMealContract contract)
     {
+        Id = Guid.NewGuid();
         Name = contract.Name;
         Calories = contract.Calories;
     }
