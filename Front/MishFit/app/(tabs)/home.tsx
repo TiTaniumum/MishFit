@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ImageBackground } from 'react-native';
 import * as Progress from 'react-native-progress';
 
 // Импорт трекеров
 import WaterTracker from '@/components/WaterTracker';
 
+
 export default function Home() {
-  const [steps, setSteps] = useState<number>(4500);
-  const [water, setWater] = useState<number>(0);
   const [calories, setCalories] = useState<number>(2378); 
 
   return (
@@ -27,21 +26,6 @@ export default function Home() {
             color="#6554d7" 
             style={styles.progressBar} 
             height={8}
-          />
-        </View>
-      </View>
-
-      <View style={styles.stepsSection}>
-        <Text style={styles.label}>Пройдено шагов</Text>
-        <View style={styles.stepsInfo}>
-          <Text style={styles.value}>{steps} / 6000</Text>
-          <Progress.Circle 
-            size={80} 
-            progress={steps / 6000} 
-            showsText={true} 
-            formatText={() => `${steps}/6000`} 
-            color="#6554d7"
-            textStyle={styles.stepsCircleText}
           />
         </View>
       </View>
