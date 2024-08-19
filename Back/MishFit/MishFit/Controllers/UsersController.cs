@@ -1,4 +1,5 @@
 ﻿using System.Security.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MishFit.Contracts;
 using MishFit.Entities;
@@ -19,6 +20,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<List<User>>> GetAllUsersAsync()
     {
         try
@@ -96,7 +98,7 @@ public class UsersController : ControllerBase
     
 
     [HttpPost]
-    [Route("Register")]
+    [Route("register")]
     public async Task<ActionResult<User>> RegisterUserAsync([FromBody] RegisterUserContract contract)
     {
         if (!ModelState.IsValid)
@@ -117,7 +119,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost]
-    [Route("Login")]
+    [Route("login")]
     public async Task<ActionResult<TokenResponse>> LoginUserAsync([FromBody] LoginUserContract contract)
     {
         if (!ModelState.IsValid)

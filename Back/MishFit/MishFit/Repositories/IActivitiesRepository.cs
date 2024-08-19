@@ -11,5 +11,5 @@ public interface IActivitiesRepository
     public Task<Activity> CreateActivityAsync(CreateActivityContract contract);
     public Task<Activity> UpdateActivityAsync(UpdateActivityContract contract);
 
-    public Task DeleteActivityByIdAsync(Guid id);
+    public Task<Activity> DeleteActivityByIdAsync(Guid id);
 }

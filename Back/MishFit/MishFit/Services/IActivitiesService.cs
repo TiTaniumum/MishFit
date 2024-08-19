@@ -9,5 +9,5 @@ public interface IActivitiesService
     Task<Activity> GetActivityByIdAsync(Guid id);
     Task<Activity> CreateActivityAsync(CreateActivityContract contract);
     Task<Activity> UpdateActivityAsync(UpdateActivityContract contract);
-    Task DeleteActivityByIdAsync(Guid id);
+    Task<Activity> DeleteActivityByIdAsync(Guid id);
 }

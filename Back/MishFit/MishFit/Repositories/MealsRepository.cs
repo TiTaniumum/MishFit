@@ -49,10 +49,11 @@ public class MealsRepository : IMealsRepository
         return meal;
     }
 
-    public async Task DeleteMealByIdAsync(Guid id)
+    public async Task<Meal> DeleteMealByIdAsync(Guid id)
     {
         var meal = await GetMealByIdAsync(id);
         _context.Meals.Remove(meal);
         await _context.SaveChangesAsync();
+        return meal;
     }
 }

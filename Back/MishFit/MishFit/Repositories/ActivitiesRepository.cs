@@ -50,10 +50,11 @@ public class ActivitiesRepository : IActivitiesRepository
         return activity;
     }
 
-    public async Task DeleteActivityByIdAsync(Guid id)
+    public async Task<Activity> DeleteActivityByIdAsync(Guid id)
     {
         var activity = await GetActivityByIdAsync(id);
         _context.Activities.Remove(activity);
         await _context.SaveChangesAsync();
+        return activity;
     }
 }

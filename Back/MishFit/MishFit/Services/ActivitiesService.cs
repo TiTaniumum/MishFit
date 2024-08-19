@@ -37,11 +37,11 @@ public class ActivitiesService : IActivitiesService
         return await _repository.UpdateActivityAsync(contract);
     }
 
-    public async Task DeleteActivityByIdAsync(Guid id)
+    public async Task<Activity> DeleteActivityByIdAsync(Guid id)
     {
         if (id == Guid.Empty)
             throw new InvalidIncomingParameterException($"Activity id cannot be null.");
 
-        await _repository.DeleteActivityByIdAsync(id);
+        return await _repository.DeleteActivityByIdAsync(id);
     }
 }

@@ -52,7 +52,7 @@ public class TrackerController : ControllerBase
     }
     
     [HttpGet]
-    [Route("GetAllTrackers")]
+    [Route("getAllTrackers")]
     public Task<ActionResult<List<Tracker>>> GetAllTrackers()
     {
         return HandleRequestAsync(async () => await _service.GetAllTrackersAsync());
@@ -60,7 +60,7 @@ public class TrackerController : ControllerBase
     
     
     [HttpPost]
-    [Route("TrackerHistory")]
+    [Route("trackerHistory")]
     public Task<ActionResult<List<Tracker>>> TrackerHistory([FromBody] TrackerHistoryContract contract)
     {
         return HandleRequestAsync(async () =>
@@ -71,7 +71,7 @@ public class TrackerController : ControllerBase
     }
     
     [HttpPost]
-    [Route("AddCalorieTracker")]
+    [Route("addCalorieTracker")]
     public Task<ActionResult<Tracker>> AddCalorieTracker([FromBody] CreateCalorieTrackerContract contract)
     {
         return HandleRequestAsync(async () =>
@@ -82,7 +82,7 @@ public class TrackerController : ControllerBase
     }
     
     [HttpPost]
-    [Route("AddActivityTracker")]
+    [Route("addActivityTracker")]
     public Task<ActionResult<Tracker>> AddActivityTracker([FromBody] CreateActivityTrackerContract contract)
     {
         return HandleRequestAsync(async () =>
@@ -93,7 +93,7 @@ public class TrackerController : ControllerBase
     }
     
     [HttpPost]
-    [Route("AddSleepTracker")]
+    [Route("addSleepTracker")]
     public Task<ActionResult<Tracker>> AddSleepTracker([FromBody] CreateSleepTrackerContract contract)
     {
         return HandleRequestAsync(async () =>
@@ -104,14 +104,14 @@ public class TrackerController : ControllerBase
     }
     
     [HttpPut]
-    [Route("UpdateSleepQuality")]
+    [Route("updateSleepQuality")]
     public Task<ActionResult<Tracker>> UpdateSleepQuality([FromBody] UpdateSleepTrackerContract contract)
     {
         return HandleRequestAsync(async () => await _service.UpdateSleepQualityAsync(contract));
     }
     
     [HttpDelete]
-    [Route("DeleteTracker")]
+    [Route("deleteTracker")]
     public Task<ActionResult<Tracker>> DeleteTracker(Guid id)
     {
         return HandleRequestAsync(async () => await _service.DeleteTrackerAsync(id));
