@@ -94,10 +94,7 @@ builder.Services
     });
 
 services.AddAuthorization();
-services.AddScoped<IMealsTypesRepository, MealsTypesRepository>();
-services.AddScoped<INutritionsRepository, NutritionsRepository>();
-services.AddScoped<IFoodsRepository, FoodsRepository>();
-services.AddScoped<IFoodsService, FoodsService>();
+
 services.AddScoped<IRecommendationsRepository, RecommendationsRepository>();
 services.AddScoped<IRecommendationsService, RecommendationsService>();
 
