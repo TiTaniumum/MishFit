@@ -24,7 +24,7 @@ public class MealsController: ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Meal>> GetMealByIdAsync(Guid id)
+    public async Task<ActionResult<Meal>> GetMealByIdAsync(long id)
     {
         return await _service.GetMealByIdAsync(id);
     }
@@ -44,7 +44,7 @@ public class MealsController: ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<Meal>> DeleteMealByIdAsync(Guid id)
+    public async Task<ActionResult<Meal>> DeleteMealByIdAsync(long id)
     {
         return await _service.DeleteMealByIdAsync(id);
     }

@@ -6,8 +6,8 @@ namespace MishFit.Repositories;
 public interface IMealsRepository
 {
     Task<List<Meal>> GetAllMealsAsync();
-    Task<Meal> GetMealByIdAsync(Guid id);
+    Task<Meal> GetMealByIdAsync(long id);
     Task<Meal> CreateMealAsync(CreateMealContract contract);
     Task<Meal> UpdateMealAsync(UpdateMealContract contract);
-    Task<Meal> DeleteMealByIdAsync(Guid id);
+    Task<Meal> DeleteMealByIdAsync(long id);
 }

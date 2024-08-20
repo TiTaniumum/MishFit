@@ -7,19 +7,13 @@ public class Tracker
 {
     public Guid Id { get; set; }
 
-    public Guid UserId { get; set; }
-
-    public User? User { get; set; }
+    public User User { get; set; }
 
     public TrackerType TrackerType { get; set; }
-
-    public Guid? MealId { get; set; }
 
     public Meal? Meal { get; set; }
 
     public int? MealGrams { get; set; }
-
-    public Guid? ActivityId { get; set; }
 
     public Activity? Activity { get; set; }
 
@@ -45,34 +39,28 @@ public class Tracker
     {
     }
 
-    public Tracker(Guid userId, User user, TrackerType trackerType, Guid mealId, Meal meal, int mealGrams)
+    public Tracker(User user, TrackerType trackerType, Meal meal, int mealGrams)
     {
         Id = Guid.NewGuid();
-        UserId = userId;
         User = user;
         TrackerType = trackerType;
-        MealId = mealId;
         Meal = meal;
         MealGrams = mealGrams;
         TrackerDateTime = DateTime.UtcNow;
     }
-
+    
     public Tracker(
-        Guid userId,
         User user,
         TrackerType trackerType,
-        Guid activityId,
         Activity activity,
         ActivityType activityType,
-        int activityTimespan,
-        int activitySets,
-        int activityRepetitions)
+        int? activityTimespan,
+        int? activitySets,
+        int? activityRepetitions)
     {
         Id = Guid.NewGuid();
-        UserId = userId;
         User = user;
         TrackerType = trackerType;
-        ActivityId = activityId;
         Activity = activity;
         ActivityType = activityType;
         ActivityTimespan = activityTimespan;
@@ -80,11 +68,10 @@ public class Tracker
         ActivityRepetitions = activityRepetitions;
         TrackerDateTime = DateTime.UtcNow;
     }
-
-    public Tracker(Guid userId, User user, TrackerType trackerType, DateTime sleepBegin, DateTime sleepEnd)
+    
+    public Tracker(User user, TrackerType trackerType, DateTime sleepBegin, DateTime sleepEnd)
     {
         Id = Guid.NewGuid();
-        UserId = userId;
         User = user;
         TrackerType = trackerType;
         SleepBegin = sleepBegin;

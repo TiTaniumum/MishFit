@@ -2,6 +2,6 @@
 
 public enum ActivityType
 {
-    Countable,
+    Countable=1,
     Timespan
 }

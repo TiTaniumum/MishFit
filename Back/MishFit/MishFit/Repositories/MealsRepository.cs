@@ -19,7 +19,7 @@ public class MealsRepository : IMealsRepository
         return await _context.Meals.ToListAsync();
     }
 
-    public async Task<Meal> GetMealByIdAsync(Guid id)
+    public async Task<Meal> GetMealByIdAsync(long id)
     {
         return await _context.Meals.FindAsync(id) ??
                throw new ElementNotFoundException($"Meal with id {id} not found.");
@@ -49,7 +49,7 @@ public class MealsRepository : IMealsRepository
         return meal;
     }
 
-    public async Task<Meal> DeleteMealByIdAsync(Guid id)
+    public async Task<Meal> DeleteMealByIdAsync(long id)
     {
         var meal = await GetMealByIdAsync(id);
         _context.Meals.Remove(meal);

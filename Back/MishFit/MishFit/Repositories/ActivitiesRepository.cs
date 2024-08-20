@@ -19,7 +19,7 @@ public class ActivitiesRepository : IActivitiesRepository
         return await _context.Activities.ToListAsync();
     }
 
-    public async Task<Activity> GetActivityByIdAsync(Guid id)
+    public async Task<Activity> GetActivityByIdAsync(long id)
     {
         return await _context.Activities.FindAsync(id) ??
                throw new ElementNotFoundException($"Activity with id {id} not found.");
@@ -50,7 +50,7 @@ public class ActivitiesRepository : IActivitiesRepository
         return activity;
     }
 
-    public async Task<Activity> DeleteActivityByIdAsync(Guid id)
+    public async Task<Activity> DeleteActivityByIdAsync(long id)
     {
         var activity = await GetActivityByIdAsync(id);
         _context.Activities.Remove(activity);

@@ -2,7 +2,7 @@
 
 public enum TrackerType
 {
-    Calorie, 
+    Calorie=1, 
     Activity,
     Sleep
 }

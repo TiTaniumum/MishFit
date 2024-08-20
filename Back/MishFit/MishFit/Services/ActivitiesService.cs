@@ -19,9 +19,9 @@ public class ActivitiesService : IActivitiesService
         return await _repository.GetAllActivitiesAsync();
     }
 
-    public async Task<Activity> GetActivityByIdAsync(Guid id)
+    public async Task<Activity> GetActivityByIdAsync(long id)
     {
-        if (id == Guid.Empty)
+        if (id <= 0)
             throw new InvalidIncomingParameterException($"Activity id cannot be null.");
         
         return await _repository.GetActivityByIdAsync(id);
@@ -37,9 +37,9 @@ public class ActivitiesService : IActivitiesService
         return await _repository.UpdateActivityAsync(contract);
     }
 
-    public async Task<Activity> DeleteActivityByIdAsync(Guid id)
+    public async Task<Activity> DeleteActivityByIdAsync(long id)
     {
-        if (id == Guid.Empty)
+        if (id <= 0)
             throw new InvalidIncomingParameterException($"Activity id cannot be null.");
 
         return await _repository.DeleteActivityByIdAsync(id);

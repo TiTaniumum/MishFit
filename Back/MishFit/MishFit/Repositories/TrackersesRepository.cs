@@ -45,7 +45,7 @@ public class TrackersesRepository : ITrackersRepository
             _jwtProvider.GetUserIdFromToken(token) ?? "");
         
         var filteredTrackers = await _context.Trackers.Where(t =>
-            t.UserId == userId && t.TrackerType == contract.TrackerType && t.TrackerDateTime >= contract.DateFrom &&
+            t.User.Id == userId && t.TrackerType == contract.TrackerType && t.TrackerDateTime >= contract.DateFrom &&
             t.TrackerDateTime <= contract.DateTo).ToListAsync();
 
         return filteredTrackers;
@@ -61,10 +61,8 @@ public class TrackersesRepository : ITrackersRepository
 
 
         var tracker = new Tracker(
-            userId,
             user,
             TrackerType.Calorie,
-            contract.MealId,
             meal,
             contract.MealGrams
         );
@@ -84,10 +82,8 @@ public class TrackersesRepository : ITrackersRepository
         var activity = await _activitiesRepository.GetActivityByIdAsync(contract.ActivityId);
         
         var tracker = new Tracker(
-            userId,
             user,
             TrackerType.Activity,
-            contract.ActivityId,
             activity,
             contract.ActivityType,
             contract.ActivityTimespan,
@@ -108,7 +104,6 @@ public class TrackersesRepository : ITrackersRepository
         var user = await _usersRepository.GetUserByIdAsync(userId);
 
         var tracker = new Tracker(
-            userId,
             user,
             TrackerType.Sleep,
             contract.SleepBegin,

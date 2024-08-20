@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MishFit;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -21,12 +22,14 @@ namespace MishFit.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
+            
             modelBuilder.Entity("MishFit.Entities.Activity", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<int>("ActivityType")
                         .HasColumnType("integer");
@@ -45,9 +48,11 @@ namespace MishFit.Migrations
 
             modelBuilder.Entity("MishFit.Entities.Meal", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<int>("Calories")
                         .HasColumnType("integer");
@@ -61,17 +66,45 @@ namespace MishFit.Migrations
                     b.ToTable("Meals");
                 });
 
+            modelBuilder.Entity("MishFit.Entities.Recommendation", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("AddDateTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DeleteDateTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("RecommendationType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Recommendations");
+                });
+
             modelBuilder.Entity("MishFit.Entities.Tracker", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("ActivityId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("ActivityId1")
-                        .HasColumnType("uuid");
+                    b.Property<long?>("ActivityId")
+                        .HasColumnType("bigint");
 
                     b.Property<int?>("ActivityRepetitions")
                         .HasColumnType("integer");
@@ -91,8 +124,8 @@ namespace MishFit.Migrations
                     b.Property<int?>("MealGrams")
                         .HasColumnType("integer");
 
-                    b.Property<Guid?>("MealId")
-                        .HasColumnType("uuid");
+                    b.Property<long?>("MealId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("SleepBegin")
                         .HasColumnType("timestamp with time zone");
@@ -114,7 +147,7 @@ namespace MishFit.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ActivityId1");
+                    b.HasIndex("ActivityId");
 
                     b.HasIndex("MealId");
 
@@ -122,38 +155,6 @@ namespace MishFit.Migrations
 
                     b.ToTable("Trackers");
                 });
-
-            modelBuilder.Entity("MishFit.Entities.Recommendation", b =>
-            {
-                b.Property<Guid>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("uuid");
-
-                b.Property<DateTime>("AddDateTime")
-                    .HasColumnType("timestamp with time zone");
-
-                b.Property<string>("Content")
-                    .IsRequired()
-                    .HasColumnType("text");
-
-                b.Property<DateTime>("DeleteDateTime")
-                    .HasColumnType("timestamp with time zone");
-
-                b.Property<int>("RecommendationType")
-                    .HasColumnType("integer");
-
-                b.Property<Guid>("RecommendationTypeId")
-                    .HasColumnType("uuid");
-
-                b.Property<string>("Title")
-                    .IsRequired()
-                    .HasMaxLength(100)
-                    .HasColumnType("character varying(100)");
-
-                b.HasKey("Id");
-
-                b.ToTable("Recommendations");
-            });
 
             modelBuilder.Entity("MishFit.Entities.User", b =>
                 {
@@ -201,7 +202,7 @@ namespace MishFit.Migrations
                 {
                     b.HasOne("MishFit.Entities.Activity", "Activity")
                         .WithMany()
-                        .HasForeignKey("ActivityId1");
+                        .HasForeignKey("ActivityId");
 
                     b.HasOne("MishFit.Entities.Meal", "Meal")
                         .WithMany()
@@ -218,7 +219,8 @@ namespace MishFit.Migrations
                     b.Navigation("Meal");
 
                     b.Navigation("User");
-                });
+                }
+                );
 #pragma warning restore 612, 618
         }
     }

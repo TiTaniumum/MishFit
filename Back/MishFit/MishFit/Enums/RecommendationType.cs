@@ -2,7 +2,7 @@
 
 public enum RecommendationType
 {
-    WeightLoss,
+    WeightLoss=1,
     WeightGain,
     Hidration,
     Stepps,
