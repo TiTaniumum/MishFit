@@ -54,10 +54,9 @@ public class JwtProvider : IJwtProvider
             
             return userIdClaim?.Value;
         }
-        catch(Exception e)
+        catch
         {
-            // throw new InvalidIncomingParameterException("Token validation error!");
-            throw new InvalidIncomingParameterException(e.Message + " "+ token);
+            throw new InvalidIncomingParameterException("Token validation error!");
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using MishFit.Enums;
+using MishFit.Responses;
 
 namespace MishFit.Entities;
 
@@ -77,5 +78,25 @@ public class Tracker
         SleepBegin = sleepBegin;
         SleepEnd = sleepEnd;
         TrackerDateTime = DateTime.UtcNow;
+    }
+
+    public TrackerResponse TrackerToTrackerResponse()
+    {
+        return new TrackerResponse(
+            Id,
+            TrackerType,
+            Meal,
+            MealGrams,
+            Activity,
+            ActivityType,
+            ActivityTimespan,
+            ActivitySets,
+            ActivityRepetitions,
+            SleepBegin,
+            SleepEnd,
+            SleepQuality,
+            TrackerDateTime,
+            DeleteDateTime
+        );
     }
 }

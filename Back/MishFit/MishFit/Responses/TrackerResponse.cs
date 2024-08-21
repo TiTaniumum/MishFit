@@ -7,10 +7,8 @@ namespace MishFit.Responses;
 public record TrackerResponse(
     [Required(ErrorMessage = "Id is required.")]
     long Id,
-    
     [Required(ErrorMessage = "TrackerType is required.")]
     TrackerType TrackerType,
-    
     Meal? Meal,
     int? MealGrams,
     Activity? Activity,

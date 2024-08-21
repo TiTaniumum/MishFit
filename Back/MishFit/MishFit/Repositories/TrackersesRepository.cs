@@ -3,6 +3,7 @@ using MishFit.Contracts;
 using MishFit.Entities;
 using MishFit.Enums;
 using MishFit.Exceptions;
+using MishFit.Responses;
 using MishFit.Security;
 
 namespace MishFit.Repositories;
@@ -33,9 +34,9 @@ public class TrackersesRepository : ITrackersRepository
         return await _context.Trackers.ToListAsync();
     }
 
-    public async Task<Tracker> GetTrackerByIdAsync(Guid id)
+    public async Task<Tracker> GetTrackerByIdAsync(long id)
     {
-        return await _context.Trackers.FindAsync(id) ??
+        return (await _context.Trackers.FindAsync(id)) ??
                throw new ElementNotFoundException($"Tracker with id {id} not found.");
     }
 
@@ -124,7 +125,7 @@ public class TrackersesRepository : ITrackersRepository
         return tracker;
     }
 
-    public async Task<Tracker> DeleteTracker(Guid trackerId)
+    public async Task<Tracker> DeleteTracker(long trackerId)
     {
         var tracker = await GetTrackerByIdAsync(trackerId);
         tracker.DeleteDateTime = DateTime.UtcNow;

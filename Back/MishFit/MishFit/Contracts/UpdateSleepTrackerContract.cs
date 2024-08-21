@@ -4,7 +4,7 @@ namespace MishFit.Contracts;
 
 public record UpdateSleepTrackerContract(
     [Required(ErrorMessage = "TrackerId is required.")]
-    Guid TrackerId,
+    long TrackerId,
     
     [Required(ErrorMessage = "SleepQuality is required.")]
     int SleepQuality
