@@ -1,38 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import * as Progress from 'react-native-progress';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function WaterTracker() {
+export default function Trackers() {
     const [waterIntake, setWaterIntake] = useState<number>(0);
     const [inputValue, setInputValue] = useState<string>('200');
-    const dailyIntake = 3000;
-
-    useEffect(() => {
-        const loadWaterIntake = async () => {
-            try {
-                const savedWaterIntake = await AsyncStorage.getItem('waterIntake');
-                if (savedWaterIntake) {
-                    setWaterIntake(parseInt(savedWaterIntake, 10));
-                }
-            } catch (error) {
-                console.error('Ошибка загрузки данных: ', error);
-            }
-        };
-        loadWaterIntake();
-    }, []);
-
-    useEffect(() => {
-        const saveWaterIntake = async () => {
-            try {
-                await AsyncStorage.setItem('waterIntake', waterIntake.toString());
-            } catch (error) {
-                console.error('Ошибка сохранения данных: ', error);
-            }
-        };
-        saveWaterIntake();
-    }, [waterIntake]);
+    const dailyIntake = 3000; // Суточная норма (мл)
 
     const handleAddWater = () => {
         const numericInputValue = parseInt(inputValue) || 0;
@@ -61,13 +35,25 @@ export default function WaterTracker() {
 
     const handleClearWater = () => {
         setWaterIntake(0);
-        AsyncStorage.removeItem('waterIntake');
         setInputValue('200');
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Водный баланс</Text>
+        <ScrollView style={styles.container}>
+            <View style={styles.tabContainer}>
+                <TouchableOpacity style={styles.tabActive}>
+                    <Text style={styles.tabTextActive}>Водный баланс</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.tab}>
+                    <Text style={styles.tabText}>Калории</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.tab}>
+                    <Text style={styles.tabText}>Упражнения</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.tab}>
+                    <Text style={styles.tabText}>Сон</Text>
+                </TouchableOpacity>
+            </View>
 
             <View style={styles.waterBalanceContainer}>
                 <Svg
@@ -85,15 +71,13 @@ export default function WaterTracker() {
                     <Text style={styles.clearButton}>Сброс</Text>
                 </TouchableOpacity>
             </View>
-
             <Progress.Bar
                 progress={waterIntake / dailyIntake}
-                width={200}
+                width={400}
                 height={10}
                 color="#6554d7"
                 style={styles.progressBar}
             />
-
             <Text style={styles.waterIntakeText}>{waterIntake} / {dailyIntake} мл</Text>
 
             <View style={styles.inputContainer}>
@@ -116,29 +100,53 @@ export default function WaterTracker() {
             <TouchableOpacity onPress={handleAddWater} style={styles.addButton}>
                 <Text style={styles.buttonText}>добавить {inputValue} мл</Text>
             </TouchableOpacity>
-        </View>
+        </ScrollView>
     );
 }
-
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         padding: 16,
+        backgroundColor: '#cfd9e3',
+    },
+    tabContainer: {
+        flexDirection: 'row',
+        marginBottom: 16,
+        marginTop: 45,
+    },
+    tab: {
+        flex: 1,
+        padding: 12,
+        alignItems: 'center',
         backgroundColor: '#fff',
         borderRadius: 10,
-        marginBottom: 16,
-        alignItems: 'center',
+        marginRight: 5,
     },
-    title: {
-        fontSize: 18,
-        fontWeight: "bold",
-        marginBottom: 10,
+    tabActive: {
+        flex: 1,
+        padding: 12,
+        alignItems: 'center',
+        backgroundColor: '#6554d7',
+        borderRadius: 10,
+        marginRight: 5,
+    },
+    tabText: {
         color: '#333',
+        fontSize: 14,
+    },
+    progressBar: {
+        marginVertical: 20,
+    },
+    tabTextActive: {
+        color: '#fff',
+        fontSize: 14,
     },
     waterBalanceContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 20,
+        paddingLeft: 80,
     },
     waterImage: {
         justifyContent: 'center',
@@ -148,19 +156,17 @@ const styles = StyleSheet.create({
         backgroundColor: '#FF6347',
         padding: 10,
         borderRadius: 10,
-        marginLeft: 20,
+        width: 80,
     },
     clearButton: {
         color: '#fff',
         fontSize: 16,
     },
-    progressBar: {
-        marginVertical: 20,
-    },
     waterIntakeText: {
         fontSize: 24,
         color: '#333',
         marginBottom: 20,
+        textAlign: 'center',
     },
     inputContainer: {
         flexDirection: 'row',
@@ -201,6 +207,5 @@ const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 10,
         alignItems: 'center',
-        width: '100%',
     },
 });

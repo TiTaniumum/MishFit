@@ -1,70 +1,102 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, ImageBackground } from 'react-native';
+import * as Progress from 'react-native-progress';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+// Импорт трекеров
+import WaterTracker from '@/components/WaterTracker';
 
-export default function HomeScreen() {
+
+export default function Home() {
+  const [calories, setCalories] = useState<number>(2378); 
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <ScrollView style={styles.container}>
+      <View style={styles.recommendations}>
+        <Text style={styles.text}>Рекомендации</Text>
+      </View>
+
+      <WaterTracker/> 
+      <View style={styles.section}>
+        <Text style={styles.label}>Калории</Text>
+        <View style={styles.progressContainer}>
+          <Text style={styles.value}>{calories} / 2848 ккал</Text>
+          <Progress.Bar 
+            progress={calories / 2848} 
+            width={130} 
+            color="#6554d7" 
+            style={styles.progressBar} 
+            height={8}
+          />
+        </View>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#cfd9e3',
+  },
+  section: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    marginBottom: 16,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  recommendations: {
+    backgroundColor: '#6554d7',
+    padding: 20,
+    borderRadius: 10,
+    marginBottom: 28, 
+    marginTop: 38,  
+    alignItems: 'center',
+  },
+  text: {
+    color: '#fff',
+    fontSize: 18,
+    fontFamily:"System"
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+    fontFamily: "System"
+  },
+  progressContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    justifyContent: 'space-between',
+    marginTop: 10,
+    paddingRight: 15
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  value: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#555',
+    paddingRight: 20,
+    fontFamily:"System"
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  progressBar: {
+    marginTop: 10,
+  },
+  stepsSection: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    marginBottom: 16,
+  },
+  stepsInfo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  stepsCircleText: {
+    fontSize: 12,
   },
 });
