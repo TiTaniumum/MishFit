@@ -28,6 +28,13 @@ public class ActivitiesController: ControllerBase
     {
         return await _service.GetActivityByIdAsync(id);
     }
+    
+    [HttpGet]
+    [Route("searchActivityByName/{name}")]
+    public async Task<ActionResult<List<Activity>>> SearchActivityByNameAsync(string name)
+    {
+        return await _service.SearchActivityByNameAsync(name);
+    }
 
     [HttpPost]
     [Route("createActivity")]

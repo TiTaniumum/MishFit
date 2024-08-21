@@ -23,7 +23,13 @@ public class ActivitiesRepository : IActivitiesRepository
     {
         return await _context.Activities.FindAsync(id) ??
                throw new ElementNotFoundException($"Activity with id {id} not found.");
-        ;
+    }
+
+    public async Task<List<Activity>> SearchActivityByNameAsync(string name)
+    {
+        return await _context.Activities.Where((a) => a.Name.ToLower().Contains(name))
+                   .ToListAsync() ??
+               throw new ElementNotFoundException($"Activity with name {name} not found.");
     }
 
     public async Task<Activity> CreateActivityAsync(CreateActivityContract contract)

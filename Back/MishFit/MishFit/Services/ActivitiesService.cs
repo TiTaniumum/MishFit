@@ -26,6 +26,14 @@ public class ActivitiesService : IActivitiesService
         
         return await _repository.GetActivityByIdAsync(id);
     }
+    
+    public async Task<List<Activity>> SearchActivityByNameAsync(string name)
+    {
+        if (name.Trim()=="")
+            throw new InvalidIncomingParameterException($"Activity name cannot be null.");
+        
+        return await _repository.SearchActivityByNameAsync(name.ToLower().Trim());
+    }
 
     public async Task<Activity> CreateActivityAsync(CreateActivityContract contract)
     {

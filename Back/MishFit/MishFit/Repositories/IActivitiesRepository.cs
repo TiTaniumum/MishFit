@@ -7,7 +7,7 @@ public interface IActivitiesRepository
 {
     public Task<List<Activity>> GetAllActivitiesAsync();
     public Task<Activity> GetActivityByIdAsync(long id);
-
+    public Task<List<Activity>> SearchActivityByNameAsync(string name);
     public Task<Activity> CreateActivityAsync(CreateActivityContract contract);
     public Task<Activity> UpdateActivityAsync(UpdateActivityContract contract);
 
