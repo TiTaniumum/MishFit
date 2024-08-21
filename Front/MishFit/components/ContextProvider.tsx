@@ -9,13 +9,18 @@ import React, {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Tracker, { trackerMock, TrackerType } from "@/Interfaces.tsx/Tracker";
 
-  export function formatDate(date: Date){
+  export function formatDate(date: Date, type: string = 'date'){
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
     const day = String(date.getDate()).padStart(2, '0');
+    const monthStr = date.toLocaleString('default', { month: 'long' });
 
-    return `${day}.${month}.${year}`;
-  };  
+    switch(type){
+      case 'history': return `${year} ${monthStr} ${day}`;
+      case 'date': return `${day}.${month}.${year}`;
+      default: return `${day}.${month}.${year}`;
+    }
+  };
 
   export function formatTime(date: Date){
     const hours = date.getHours();

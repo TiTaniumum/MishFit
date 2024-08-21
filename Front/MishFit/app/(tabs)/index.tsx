@@ -6,10 +6,11 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import CalorieHistory from '@/components/CalorieHistory';
 import { useGlobalContext } from '@/components/ContextProvider';
+import ActivityHistory from '@/components/ActivityHistory';
 
 export default function HomeScreen() {
 
-  const {getCalorieTrackers} = useGlobalContext()
+  const {getCalorieTrackers, getActivityTrackers} = useGlobalContext()
 
   return (
     <ParallaxScrollView
@@ -52,6 +53,7 @@ export default function HomeScreen() {
         </ThemedText>
       </ThemedView>
       <CalorieHistory trackers={getCalorieTrackers()}/>
+      <ActivityHistory trackers={getActivityTrackers()}/>
     </ParallaxScrollView>
   );
 }

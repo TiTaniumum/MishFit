@@ -1,5 +1,5 @@
 export default interface Meal {
-    id: string,
+    id: number,
     name: string,
     calories: number
 }

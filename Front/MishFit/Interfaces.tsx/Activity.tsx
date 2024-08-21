@@ -1,5 +1,5 @@
 export default interface Activity {
-    id: string,
+    id: number,
     name: string,
     activityType: number,
     calories: number

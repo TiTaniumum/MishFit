@@ -3,7 +3,6 @@ import Meal from "./Meal";
 
 export default interface Tracker{
     id: number;
-    userId: number;
     trackerType: TrackerType;
     meal: Meal | null;
     mealGramms: number | null;
@@ -33,10 +32,9 @@ export enum ActivityType{
 export const trackerMock: Tracker[] = [
     {
         id: 12,
-        userId: 23,
         trackerType: TrackerType.Calorie,
         meal: {
-            id: "123",
+            id: 123,
             name: "Pizza",
             calories: 123,
         },
@@ -54,10 +52,9 @@ export const trackerMock: Tracker[] = [
     },
     {
         id: 13,
-        userId: 23,
         trackerType: TrackerType.Calorie,
         meal: {
-            id: "124",
+            id: 124,
             name: "Macaron",
             calories: 123,
         },
@@ -74,11 +71,10 @@ export const trackerMock: Tracker[] = [
         deleteDateTime: null,
     },
     {
-        id: 12,
-        userId: 23,
+        id: 14,
         trackerType: TrackerType.Calorie,
         meal: {
-            id: "125",
+            id: 125,
             name: "Spaget",
             calories: 123,
         },
@@ -88,6 +84,69 @@ export const trackerMock: Tracker[] = [
         activityTimespan: null,
         activitySets: null,
         activityRepititions: null,
+        sleepDateTime: null,
+        sleepEnd: null,
+        sleepQuality: null,
+        trackerDateTime: new Date("2024-08-18T15:45:00"),
+        deleteDateTime: null,
+    },
+    {
+        id: 15,
+        trackerType: TrackerType.Activity,
+        meal: null,
+        mealGramms: 300,
+        activity: {
+            id: 1,
+            name: "Бегит",
+            activityType: ActivityType.Timespan,
+            calories: 123
+        },
+        activityType: ActivityType.Timespan,
+        activityTimespan: 20,
+        activitySets: null,
+        activityRepititions: null,
+        sleepDateTime: null,
+        sleepEnd: null,
+        sleepQuality: null,
+        trackerDateTime: new Date("2024-08-17T12:24:00"),
+        deleteDateTime: null,
+    },
+    {
+        id: 16,
+        trackerType: TrackerType.Activity,
+        meal: null,
+        mealGramms: 200,
+        activity: {
+            id: 2,
+            name: "Анжуманя",
+            activityType: ActivityType.Countable,
+            calories: 10
+        },
+        activityType: ActivityType.Countable,
+        activityTimespan: null,
+        activitySets: 5,
+        activityRepititions: 10,
+        sleepDateTime: null,
+        sleepEnd: null,
+        sleepQuality: null,
+        trackerDateTime: new Date("2024-08-17T12:35:00"),
+        deleteDateTime: null,
+    },
+    {
+        id: 17,
+        trackerType: TrackerType.Activity,
+        meal: null,
+        mealGramms: 300,
+        activity: {
+            id: 3,
+            name: "Турник",
+            activityType: ActivityType.Countable,
+            calories: 200
+        },
+        activityType: ActivityType.Countable,
+        activityTimespan: null,
+        activitySets: 3,
+        activityRepititions: 5,
         sleepDateTime: null,
         sleepEnd: null,
         sleepQuality: null,
