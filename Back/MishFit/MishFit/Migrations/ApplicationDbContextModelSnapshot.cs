@@ -99,9 +99,9 @@ namespace MishFit.Migrations
 
             modelBuilder.Entity("MishFit.Entities.Tracker", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint");
 
                     b.Property<long?>("ActivityId")
                         .HasColumnType("bigint");

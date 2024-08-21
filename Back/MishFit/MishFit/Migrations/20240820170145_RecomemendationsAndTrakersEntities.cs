@@ -62,7 +62,8 @@ namespace MishFit.Migrations
                 name: "Trackers",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     TrackerType = table.Column<int>(type: "integer", nullable: false),
                     MealId = table.Column<long>(type: "bigint", nullable: true),

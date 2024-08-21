@@ -1,11 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using MishFit.Enums;
 
 namespace MishFit.Entities;
 
 public class Tracker
 {
-    public Guid Id { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public long Id { get; set; }
 
     public User User { get; set; }
 
@@ -41,7 +44,6 @@ public class Tracker
 
     public Tracker(User user, TrackerType trackerType, Meal meal, int mealGrams)
     {
-        Id = Guid.NewGuid();
         User = user;
         TrackerType = trackerType;
         Meal = meal;
@@ -58,7 +60,6 @@ public class Tracker
         int? activitySets,
         int? activityRepetitions)
     {
-        Id = Guid.NewGuid();
         User = user;
         TrackerType = trackerType;
         Activity = activity;
@@ -71,7 +72,6 @@ public class Tracker
     
     public Tracker(User user, TrackerType trackerType, DateTime sleepBegin, DateTime sleepEnd)
     {
-        Id = Guid.NewGuid();
         User = user;
         TrackerType = trackerType;
         SleepBegin = sleepBegin;
