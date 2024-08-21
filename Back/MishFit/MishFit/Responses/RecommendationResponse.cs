@@ -3,7 +3,7 @@
 namespace MishFit.Responses;
 
 public record RecommendationResponse(
-    Guid Id,
+    long Id,
     string Title,
     string Recommendation,
     RecommendationType RecommendationType
