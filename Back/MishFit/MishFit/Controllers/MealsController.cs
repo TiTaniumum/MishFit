@@ -28,6 +28,13 @@ public class MealsController: ControllerBase
     {
         return await _service.GetMealByIdAsync(id);
     }
+    
+    [HttpGet]
+    [Route("searchMealByName/{name}")]
+    public async Task<ActionResult<List<Meal>>> SearchMealByNameAsync(string name)
+    {
+        return await _service.SearchMealByNameAsync(name);
+    }
 
     [HttpPost]
     [Route("createMeal")]

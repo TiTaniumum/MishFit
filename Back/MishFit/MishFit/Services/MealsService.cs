@@ -25,6 +25,14 @@ public class MealsService : IMealsService
             throw new InvalidIncomingParameterException($"Meal id cannot be null.");
         return await _repository.GetMealByIdAsync(id);
     }
+    
+    public async Task<List<Meal>> SearchMealByNameAsync(string name)
+    {
+        if (name.Trim()=="")
+            throw new InvalidIncomingParameterException($"Meal name cannot be null.");
+        
+        return await _repository.SearchMealByNameAsync(name.ToLower().Trim());
+    }
 
     public async Task<Meal> CreateMealAsync(CreateMealContract contract)
     {

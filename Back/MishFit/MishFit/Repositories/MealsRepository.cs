@@ -23,8 +23,15 @@ public class MealsRepository : IMealsRepository
     {
         return await _context.Meals.FindAsync(id) ??
                throw new ElementNotFoundException($"Meal with id {id} not found.");
-        ;
     }
+    
+    public async Task<List<Meal>> SearchMealByNameAsync(string name)
+    {
+        return await _context.Meals.Where((m) => m.Name.ToLower().Contains(name))
+                   .ToListAsync() ??
+               throw new ElementNotFoundException($"Meal with name {name} not found.");
+    }
+    
 
     public async Task<Meal> CreateMealAsync(CreateMealContract contract)
     {
