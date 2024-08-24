@@ -6,6 +6,7 @@ using MishFit.Contracts;
 using MishFit.Entities;
 using MishFit.Exceptions;
 using MishFit.Repositories;
+using MishFit.Responses;
 using MishFit.Services;
 
 namespace MishFit.Controllers;
@@ -53,7 +54,7 @@ public class TrackersController : ControllerBase
     
     [HttpGet]
     [Route("getAllTrackers")]
-    public Task<ActionResult<List<Tracker>>> GetAllTrackers()
+    public Task<ActionResult<List<TrackerResponse>>> GetAllTrackers()
     {
         return HandleRequestAsync(async () => await _service.GetAllTrackersAsync());
     }
@@ -61,7 +62,7 @@ public class TrackersController : ControllerBase
     
     [HttpPost]
     [Route("trackerHistory")]
-    public Task<ActionResult<List<Tracker>>> TrackerHistory([FromBody] TrackerHistoryContract contract)
+    public Task<ActionResult<List<TrackerResponse>>> TrackerHistory([FromBody] TrackerHistoryContract contract)
     {
         return HandleRequestAsync(async () =>
         {
@@ -72,7 +73,7 @@ public class TrackersController : ControllerBase
     
     [HttpPost]
     [Route("addCalorieTracker")]
-    public Task<ActionResult<Tracker>> AddCalorieTracker([FromBody] CreateCalorieTrackerContract contract)
+    public Task<ActionResult<TrackerResponse>> AddCalorieTracker([FromBody] CreateCalorieTrackerContract contract)
     {
         return HandleRequestAsync(async () =>
         {
@@ -83,7 +84,7 @@ public class TrackersController : ControllerBase
     
     [HttpPost]
     [Route("addActivityTracker")]
-    public Task<ActionResult<Tracker>> AddActivityTracker([FromBody] CreateActivityTrackerContract contract)
+    public Task<ActionResult<TrackerResponse>> AddActivityTracker([FromBody] CreateActivityTrackerContract contract)
     {
         return HandleRequestAsync(async () =>
         {
@@ -94,7 +95,7 @@ public class TrackersController : ControllerBase
     
     [HttpPost]
     [Route("addSleepTracker")]
-    public Task<ActionResult<Tracker>> AddSleepTracker([FromBody] CreateSleepTrackerContract contract)
+    public Task<ActionResult<TrackerResponse>> AddSleepTracker([FromBody] CreateSleepTrackerContract contract)
     {
         return HandleRequestAsync(async () =>
         {
@@ -105,14 +106,14 @@ public class TrackersController : ControllerBase
     
     [HttpPut]
     [Route("updateSleepQuality")]
-    public Task<ActionResult<Tracker>> UpdateSleepQuality([FromBody] UpdateSleepTrackerContract contract)
+    public Task<ActionResult<TrackerResponse>> UpdateSleepQuality([FromBody] UpdateSleepTrackerContract contract)
     {
         return HandleRequestAsync(async () => await _service.UpdateSleepQualityAsync(contract));
     }
     
     [HttpDelete]
     [Route("deleteTracker")]
-    public Task<ActionResult<Tracker>> DeleteTracker(Guid id)
+    public Task<ActionResult<TrackerResponse>> DeleteTracker(long id)
     {
         return HandleRequestAsync(async () => await _service.DeleteTrackerAsync(id));
     }

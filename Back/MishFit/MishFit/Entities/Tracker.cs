@@ -10,7 +10,7 @@ public class Tracker
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public long Id { get; set; }
-
+    
     public User User { get; set; }
 
     public TrackerType TrackerType { get; set; }
@@ -78,25 +78,5 @@ public class Tracker
         SleepBegin = sleepBegin;
         SleepEnd = sleepEnd;
         TrackerDateTime = DateTime.UtcNow;
-    }
-
-    public TrackerResponse TrackerToTrackerResponse()
-    {
-        return new TrackerResponse(
-            Id,
-            TrackerType,
-            Meal,
-            MealGrams,
-            Activity,
-            ActivityType,
-            ActivityTimespan,
-            ActivitySets,
-            ActivityRepetitions,
-            SleepBegin,
-            SleepEnd,
-            SleepQuality,
-            TrackerDateTime,
-            DeleteDateTime
-        );
     }
 }
