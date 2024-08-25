@@ -22,18 +22,161 @@ namespace MishFit.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("MishFit.Entities.Activity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("ActivityType")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Calories")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Activities");
+                });
+
+            modelBuilder.Entity("MishFit.Entities.Meal", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("Calories")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Meals");
+                });
+
+            modelBuilder.Entity("MishFit.Entities.Recommendation", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("AddDateTime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeleteDateTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("RecommendationType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Recommendations");
+                });
+
+            modelBuilder.Entity("MishFit.Entities.Tracker", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("ActivityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("ActivityRepetitions")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("ActivitySets")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("ActivityTimespan")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("ActivityType")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("DeleteDateTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("MealGrams")
+                        .HasColumnType("integer");
+
+                    b.Property<long?>("MealId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("SleepBegin")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("SleepEnd")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("SleepQuality")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("TrackerDateTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("TrackerType")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActivityId");
+
+                    b.HasIndex("MealId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Trackers");
+                });
+
             modelBuilder.Entity("MishFit.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Login")
+                    b.Property<DateTime?>("BirthDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<string>("Password")
+                    b.Property<decimal?>("Height")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
@@ -41,14 +184,44 @@ namespace MishFit.Migrations
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                    b.Property<int?>("Sex")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal?>("StepsGoal")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("Weight")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("WeightGoal")
+                        .HasColumnType("numeric");
 
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("MishFit.Entities.Tracker", b =>
+                {
+                    b.HasOne("MishFit.Entities.Activity", "Activity")
+                        .WithMany()
+                        .HasForeignKey("ActivityId");
+
+                    b.HasOne("MishFit.Entities.Meal", "Meal")
+                        .WithMany()
+                        .HasForeignKey("MealId");
+
+                    b.HasOne("MishFit.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Activity");
+
+                    b.Navigation("Meal");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

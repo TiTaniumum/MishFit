@@ -7,7 +7,8 @@ public interface IUsersRepository
 {
     Task<List<User>> GetAllUsersAsync();
     Task<User> GetUserByIdAsync(Guid id);
-    Task<User> CreateUserAsync(CreateUserContract contract);
+    Task<User> GetUserByEmailAsync(string login);
+    Task<User> AddUserAsync(User user);
     Task<User> UpdateUserAsync(UpdateUserContract contract);
     Task DeleteUserByIdAsync(Guid id);
 }

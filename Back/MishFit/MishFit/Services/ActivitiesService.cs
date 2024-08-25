@@ -5,7 +5,7 @@ using MishFit.Repositories;
 
 namespace MishFit.Services;
 
-public class ActivitiesService
+public class ActivitiesService : IActivitiesService
 {
     private readonly IActivitiesRepository _repository;
 
@@ -19,12 +19,20 @@ public class ActivitiesService
         return await _repository.GetAllActivitiesAsync();
     }
 
-    public async Task<Activity> GetActivityByIdAsync(Guid id)
+    public async Task<Activity> GetActivityByIdAsync(long id)
     {
-        if (id == Guid.Empty)
+        if (id <= 0)
             throw new InvalidIncomingParameterException($"Activity id cannot be null.");
         
         return await _repository.GetActivityByIdAsync(id);
+    }
+    
+    public async Task<List<Activity>> SearchActivityByNameAsync(string name)
+    {
+        if (name.Trim()=="")
+            throw new InvalidIncomingParameterException($"Activity name cannot be null.");
+        
+        return await _repository.SearchActivityByNameAsync(name.ToLower().Trim());
     }
 
     public async Task<Activity> CreateActivityAsync(CreateActivityContract contract)
@@ -37,11 +45,11 @@ public class ActivitiesService
         return await _repository.UpdateActivityAsync(contract);
     }
 
-    public async Task DeleteActivityByIdAsync(Guid id)
+    public async Task<Activity> DeleteActivityByIdAsync(long id)
     {
-        if (id == Guid.Empty)
+        if (id <= 0)
             throw new InvalidIncomingParameterException($"Activity id cannot be null.");
 
-        await _repository.DeleteActivityByIdAsync(id);
+        return await _repository.DeleteActivityByIdAsync(id);
     }
 }

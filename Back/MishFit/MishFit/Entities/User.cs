@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices.JavaScript;
 using Microsoft.AspNetCore.Identity;
 using MishFit.Contracts;
+using MishFit.Enums;
 
 namespace MishFit.Entities;
 
@@ -8,27 +10,38 @@ public class User
 {
     public Guid Id { get; set; }
 
-    [MaxLength(100)]
-    public String Login { get; set; } = string.Empty;
+    [MaxLength(100)] public String Email { get; set; } = string.Empty;
+    [MaxLength(100)] public String PasswordHash { get; set; } = string.Empty;
 
-    [MaxLength(100)]
-    public String Username { get; set; } = string.Empty;
-
-    [MaxLength(100)]
-    public String Password { get; set; } = string.Empty;
+    public Sex? Sex { get; set; }
     
-    public DateTime RegistrationDate { get; set; }
+    public DateTime? BirthDate { get; set; }
 
-    private User()
+    public decimal? Weight { get; set; }
+
+    public decimal? Height { get; set; }
+
+    public decimal? StepsGoal { get; set; }
+
+    public decimal? WeightGoal { get; set; }
+    public DateTime RegistrationDate { get; init; }
+
+    protected User()
     {
     }
 
-    public User(CreateUserContract contract)
+    public User(String email, String passwordHash, Sex? sex, DateTime? birthDate, decimal? weight,
+        decimal? height, decimal? stepsGoal, decimal? weightGoal)
     {
         Id = Guid.NewGuid();
-        Username = contract.Username;
-        Login = contract.Login;
-        Password = new PasswordHasher<User>().HashPassword(this, contract.Password);
+        Email = email;
+        PasswordHash = passwordHash;
+        Sex = sex;
+        BirthDate = birthDate;
+        Weight = weight;
+        Height = height;
+        StepsGoal = stepsGoal;
+        WeightGoal = weightGoal;
         RegistrationDate = DateTime.UtcNow;
-    } 
+    }
 }
