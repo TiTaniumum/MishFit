@@ -2,104 +2,32 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import * as Progress from 'react-native-progress';
+import WaterTracker from '@/components/WaterTracker';
+import CalorieTracker from '@/components/CalorieTracker';
+import ActivityTracker from '@/components/ActivityTracker';
 
 export default function Trackers() {
-    const [waterIntake, setWaterIntake] = useState<number>(0);
-    const [inputValue, setInputValue] = useState<string>('200');
-    const dailyIntake = 3000; // Суточная норма (мл)
-
-    const handleAddWater = () => {
-        const numericInputValue = parseInt(inputValue) || 0;
-        setWaterIntake((prev) => Math.min(prev + numericInputValue, dailyIntake));
-    };
-
-    const handleInputChange = (text: string) => {
-        let numericValue = parseInt(text.replace(/[^0-9]/g, '')) || 0;
-        if (numericValue > dailyIntake) {
-            numericValue = dailyIntake;
-        }
-        setInputValue(numericValue.toString());
-    };
-
-    const handleIncreaseInput = () => {
-        const currentValue = parseInt(inputValue) || 0;
-        const newValue = Math.min(currentValue + 200, dailyIntake);
-        setInputValue(newValue.toString());
-    };
-
-    const handleDecreaseInput = () => {
-        const currentValue = parseInt(inputValue) || 0;
-        const newValue = Math.max(currentValue - 200, 0);
-        setInputValue(newValue.toString());
-    };
-
-    const handleClearWater = () => {
-        setWaterIntake(0);
-        setInputValue('200');
-    };
+    const [trackerSwitch, setTrackerSwitch] = useState(0);
 
     return (
         <ScrollView style={styles.container}>
             <View style={styles.tabContainer}>
-                <TouchableOpacity style={styles.tabActive}>
-                    <Text style={styles.tabTextActive}>Водный баланс</Text>
+                <TouchableOpacity onPress={()=>{setTrackerSwitch(0);}} style={trackerSwitch == 0 ? styles.tabActive : styles.tab}>
+                    <Text style={trackerSwitch == 0 ? styles.tabTextActive : styles.tabText}>Водный баланс</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.tab}>
-                    <Text style={styles.tabText}>Калории</Text>
+                <TouchableOpacity onPress={()=>{setTrackerSwitch(1);}} style={trackerSwitch == 1 ? styles.tabActive : styles.tab}>
+                    <Text style={trackerSwitch == 1 ? styles.tabTextActive : styles.tabText}>Калории</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.tab}>
-                    <Text style={styles.tabText}>Упражнения</Text>
+                <TouchableOpacity onPress={()=>{setTrackerSwitch(2);}} style={trackerSwitch == 2 ? styles.tabActive : styles.tab}>
+                    <Text style={trackerSwitch == 2 ? styles.tabTextActive : styles.tabText}>Упражнения</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.tab}>
-                    <Text style={styles.tabText}>Сон</Text>
-                </TouchableOpacity>
-            </View>
-
-            <View style={styles.waterBalanceContainer}>
-                <Svg
-                    width="100"
-                    height="150"
-                    viewBox="0 0 200 200"
-                    style={styles.waterImage}
-                >
-                    <Path
-                        d="M100,10 C140,60 170,110 170,150 C170,200 130,200 100,200 C70,200 30,200 30,150 C30,110 60,60 100,10 Z"
-                        fill="#6554d7"
-                    />
-                </Svg>
-                <TouchableOpacity onPress={handleClearWater} style={styles.clearButtonContainer}>
-                    <Text style={styles.clearButton}>Сброс</Text>
+                <TouchableOpacity onPress={()=>{setTrackerSwitch(3);}} style={trackerSwitch == 3 ? styles.tabActive : styles.tab}>
+                    <Text style={trackerSwitch == 3 ? styles.tabTextActive : styles.tabText}>Сон</Text>
                 </TouchableOpacity>
             </View>
-            <Progress.Bar
-                progress={waterIntake / dailyIntake}
-                width={400}
-                height={10}
-                color="#6554d7"
-                style={styles.progressBar}
-            />
-            <Text style={styles.waterIntakeText}>{waterIntake} / {dailyIntake} мл</Text>
-
-            <View style={styles.inputContainer}>
-                <TouchableOpacity onPress={handleDecreaseInput} style={styles.circleButton}>
-                    <Text style={styles.circleButtonText}>-</Text>
-                </TouchableOpacity>
-
-                <TextInput
-                    style={styles.input}
-                    keyboardType="numeric"
-                    value={inputValue}
-                    onChangeText={handleInputChange}
-                />
-
-                <TouchableOpacity onPress={handleIncreaseInput} style={styles.circleButton}>
-                    <Text style={styles.circleButtonText}>+</Text>
-                </TouchableOpacity>
-            </View>
-
-            <TouchableOpacity onPress={handleAddWater} style={styles.addButton}>
-                <Text style={styles.buttonText}>добавить {inputValue} мл</Text>
-            </TouchableOpacity>
+            {trackerSwitch == 0 && (<WaterTracker/>)}
+            {trackerSwitch == 1 && (<CalorieTracker/>)}
+            {trackerSwitch == 2 && (<ActivityTracker/>)}
         </ScrollView>
     );
 }

@@ -30,6 +30,9 @@ import Tracker, { trackerMock, TrackerType } from "@/Interfaces.tsx/Tracker";
   }
 
   type GlobalContext = {
+    waterIntake: number;
+    dailyIntake: number;
+    setWaterIntake: (value: number)=> void;
     getTrackers: () => void;
     getCalorieTrackers: () => Tracker[][];
     getActivityTrackers: () => Tracker[][];
@@ -41,7 +44,9 @@ import Tracker, { trackerMock, TrackerType } from "@/Interfaces.tsx/Tracker";
   export function ContextProvider({ children }: { children: ReactNode }) {
     const [token, setToken] = useState("");
     const [trackers, setTrackers] = useState<null | Tracker[]>(trackerMock);
-    
+    const [waterIntake, setWaterIntake] = useState<number>(0);
+    const dailyIntake = 3000;
+
     function getTrackers(){
       // TODO: запрос в базу данных с использованием token
     }
@@ -59,27 +64,34 @@ import Tracker, { trackerMock, TrackerType } from "@/Interfaces.tsx/Tracker";
       );
     }
 
+    function sortGroupedTrackersByDate(arr: Tracker[][]){
+      return arr.sort((item1,item2)=>item2[0].trackerDateTime.getDate() - item1[0].trackerDateTime.getDate())
+    }
+
     function getCalorieTrackers(){
       if(!trackers) return [];
       const calories = trackers.filter(tracker=> tracker.trackerType == TrackerType.Calorie);
-      return groupTrackersByDate(calories);
+      return sortGroupedTrackersByDate(groupTrackersByDate(calories));
     }
     
     function getActivityTrackers(){
       if(!trackers) return [];
       const activities = trackers.filter(tracker=> tracker.trackerType == TrackerType.Activity);
-      return groupTrackersByDate(activities);
+      return sortGroupedTrackersByDate(groupTrackersByDate(activities));
     }
 
     function getSleepTrackers(){
       if(!trackers) return [];
       const sleeps = trackers.filter(tracker=> tracker.trackerType == TrackerType.Sleep);
-      return groupTrackersByDate(sleeps);
+      return sortGroupedTrackersByDate(groupTrackersByDate(sleeps));
     }
 
     return (
       <Context.Provider
         value={{
+          waterIntake,
+          dailyIntake,
+          setWaterIntake,
           getTrackers,
           getCalorieTrackers,
           getActivityTrackers,

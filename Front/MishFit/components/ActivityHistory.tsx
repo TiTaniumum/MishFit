@@ -16,7 +16,7 @@ import Animated, {
 export default function ActivityHistory({
   trackers,
 }: {
-  trackers: Tracker[][];
+  trackers: Tracker[][] | null;
 }) {
   function onDeleteButtonPress(id: number) {
     // TODO: запрос в базу данных на удаление трекера
@@ -24,52 +24,52 @@ export default function ActivityHistory({
 
   return (
     <View style={{ gap: 10 }}>
-      {trackers.map((item) => {
+      {trackers?.map((item) => {
         return (
-            <View style={styles.collapsibleStyle}>
-          <Collapsible
+          <View
             key={formatDate(item[0].trackerDateTime)}
-            title={formatDate(item[0].trackerDateTime, "history")}
+            style={styles.collapsibleStyle}
           >
-            <Animated.View entering={FadeIn} style={{ gap: 5 }}>
-              {item.map((tracker) => {
-                return (
-                  <View key={tracker.id} style={styles.collapsableContent}>
-                    <ThemedText>
-                      {formatTime(tracker.trackerDateTime)}{" "}
-                    </ThemedText>
-                    <ThemedText>
-                      {tracker.activity?.name}{" "}
-                      {tracker.activityType == ActivityType.Timespan ? (
-                        <View style={styles.activityContent}>
-                          <Text>{tracker.activityTimespan}</Text>
-                          <Text style={styles.tinyText}>мин</Text>
-                        </View>
-                      ) : (
-                        <View style={styles.activityContent}>
-                          <Text style={styles.tinyText}>подх</Text>
-                          <View style={{width:2}}/>
-                          <Text>{tracker.activitySets}</Text>
-                          <Text>/</Text>
-                          <Text>{tracker.activityRepititions}</Text>
-                          <View style={{width:2}}/>
-                          <Text style={styles.tinyText}>повт</Text>
-                        </View>
-                      )}
-                    </ThemedText>
-                    <Pressable
-                      style={styles.deleteButton}
-                      onPress={() => {
-                        onDeleteButtonPress(tracker.id);
-                      }}
-                    >
-                      <Text style={styles.deleteButtonText}>x</Text>
-                    </Pressable>
-                  </View>
-                );
-              })}
-            </Animated.View>
-          </Collapsible>
+            <Collapsible title={formatDate(item[0].trackerDateTime, "history")}>
+              <Animated.View entering={FadeIn} style={{ gap: 5 }}>
+                {item.map((tracker) => {
+                  return (
+                    <View key={tracker.id} style={styles.collapsableContent}>
+                      <ThemedText>
+                        {formatTime(tracker.trackerDateTime)}{" "}
+                      </ThemedText>
+                      <ThemedText>
+                        {tracker.activity?.name}{" "}
+                        {tracker.activityType == ActivityType.Timespan ? (
+                          <View style={styles.activityContent}>
+                            <Text>{tracker.activityTimespan}</Text>
+                            <Text style={styles.tinyText}>мин</Text>
+                          </View>
+                        ) : (
+                          <View style={styles.activityContent}>
+                            <Text style={styles.tinyText}>подх</Text>
+                            <View style={{ width: 2 }} />
+                            <Text>{tracker.activitySets}</Text>
+                            <Text>/</Text>
+                            <Text>{tracker.activityRepititions}</Text>
+                            <View style={{ width: 2 }} />
+                            <Text style={styles.tinyText}>повт</Text>
+                          </View>
+                        )}
+                      </ThemedText>
+                      <Pressable
+                        style={styles.deleteButton}
+                        onPress={() => {
+                          onDeleteButtonPress(tracker.id);
+                        }}
+                      >
+                        <Text style={styles.deleteButtonText}>x</Text>
+                      </Pressable>
+                    </View>
+                  );
+                })}
+              </Animated.View>
+            </Collapsible>
           </View>
         );
       })}
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   activityContent: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "baseline"
+    alignItems: "baseline",
   },
   tinyText: {
     fontSize: 10,

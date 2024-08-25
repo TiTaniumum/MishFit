@@ -3,11 +3,11 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-nativ
 import Svg, { Path } from 'react-native-svg';
 import * as Progress from 'react-native-progress';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useGlobalContext } from './ContextProvider';
 
 export default function WaterTracker() {
-    const [waterIntake, setWaterIntake] = useState<number>(0);
-    const [inputValue, setInputValue] = useState<string>('200');
-    const dailyIntake = 3000;
+    const { dailyIntake, waterIntake, setWaterIntake } = useGlobalContext();
+    const [inputValue, setInputValue] = useState<string>('50');
 
     useEffect(() => {
         const loadWaterIntake = async () => {
@@ -36,7 +36,7 @@ export default function WaterTracker() {
 
     const handleAddWater = () => {
         const numericInputValue = parseInt(inputValue) || 0;
-        setWaterIntake((prev) => Math.min(prev + numericInputValue, dailyIntake));
+        setWaterIntake(Math.min(waterIntake + numericInputValue, dailyIntake));
     };
 
     const handleInputChange = (text: string) => {
@@ -49,20 +49,20 @@ export default function WaterTracker() {
 
     const handleIncreaseInput = () => {
         const currentValue = parseInt(inputValue) || 0;
-        const newValue = Math.min(currentValue + 200, dailyIntake);
+        const newValue = Math.min(currentValue + 50, dailyIntake);
         setInputValue(newValue.toString());
     };
 
     const handleDecreaseInput = () => {
         const currentValue = parseInt(inputValue) || 0;
-        const newValue = Math.max(currentValue - 200, 0);
+        const newValue = Math.max(currentValue - 50, 0);
         setInputValue(newValue.toString());
     };
 
     const handleClearWater = () => {
         setWaterIntake(0);
         AsyncStorage.removeItem('waterIntake');
-        setInputValue('200');
+        setInputValue('50');
     };
 
     return (

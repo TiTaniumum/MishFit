@@ -5,9 +5,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Импорт трекеров
 import WaterTracker from '@/components/WaterTracker';
+import { useGlobalContext } from '@/components/ContextProvider';
 
 
 export default function Home() {
+  const {waterIntake, dailyIntake} = useGlobalContext();
   const [calories, setCalories] = useState<number>(2378); 
 
   return (
@@ -15,8 +17,19 @@ export default function Home() {
       <View style={styles.recommendations}>
         <Text style={styles.text}>Рекомендации</Text>
       </View>
-
-      <WaterTracker/> 
+      <View style={styles.section}>
+        <Text style={styles.label}>Водный баланс</Text>
+        <View style={styles.progressContainer}>
+          <Text style={styles.value}>{waterIntake} / {dailyIntake}</Text>
+          <Progress.Bar 
+            progress={waterIntake / dailyIntake} 
+            width={130} 
+            color="#6554d7" 
+            style={styles.progressBar} 
+            height={8}
+          />
+        </View>
+      </View>
       <View style={styles.section}>
         <Text style={styles.label}>Калории</Text>
         <View style={styles.progressContainer}>
