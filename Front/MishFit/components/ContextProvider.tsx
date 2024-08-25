@@ -30,10 +30,14 @@ import Tracker, { trackerMock, TrackerType } from "@/Interfaces.tsx/Tracker";
   }
 
   type GlobalContext = {
+    trackers: Tracker[];
     waterIntake: number;
     dailyIntake: number;
     setWaterIntake: (value: number)=> void;
     getTrackers: () => void;
+    setTrackers: (value:Tracker[]) => void;
+    addTracker: (tracker: Tracker) => void;
+    deleteTracker: (trackerId: number) => void;
     getCalorieTrackers: () => Tracker[][];
     getActivityTrackers: () => Tracker[][];
     getSleepTrackers: () => Tracker[][];
@@ -43,12 +47,20 @@ import Tracker, { trackerMock, TrackerType } from "@/Interfaces.tsx/Tracker";
   
   export function ContextProvider({ children }: { children: ReactNode }) {
     const [token, setToken] = useState("");
-    const [trackers, setTrackers] = useState<null | Tracker[]>(trackerMock);
+    const [trackers, setTrackers] = useState<Tracker[]>(trackerMock);
     const [waterIntake, setWaterIntake] = useState<number>(0);
     const dailyIntake = 3000;
 
     function getTrackers(){
       // TODO: запрос в базу данных с использованием token
+    }
+
+    function addTracker(tracker: Tracker){
+      setTrackers([...trackers, tracker]);
+    }
+
+    function deleteTracker(trackerId: number){
+      setTrackers(trackers.filter(item => item.id != trackerId));
     }
 
     function groupTrackersByDate(arr: Tracker[]){
@@ -89,10 +101,14 @@ import Tracker, { trackerMock, TrackerType } from "@/Interfaces.tsx/Tracker";
     return (
       <Context.Provider
         value={{
+          trackers,
           waterIntake,
           dailyIntake,
           setWaterIntake,
           getTrackers,
+          setTrackers,
+          addTracker,
+          deleteTracker,
           getCalorieTrackers,
           getActivityTrackers,
           getSleepTrackers

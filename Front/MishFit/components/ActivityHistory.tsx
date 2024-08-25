@@ -2,25 +2,17 @@ import React, { PropsWithChildren, useState } from "react";
 import { Pressable, TextInput, StyleSheet, View, Text } from "react-native";
 import Tracker, { ActivityType } from "@/Interfaces.tsx/Tracker";
 import { Collapsible } from "./Collapsible";
-import { formatDate, formatTime } from "./ContextProvider";
+import { formatDate, formatTime, useGlobalContext } from "./ContextProvider";
 import { ThemedText } from "./ThemedText";
-import Animated, {
-  FadeIn,
-  FadeOut,
-  SlideInDown,
-  SlideInUp,
-  SlideOutDown,
-  SlideOutUp,
-} from "react-native-reanimated";
+import Animated, { FadeIn } from "react-native-reanimated";
+import { TouchableOpacity } from "react-native";
 
 export default function ActivityHistory({
   trackers,
 }: {
   trackers: Tracker[][] | null;
 }) {
-  function onDeleteButtonPress(id: number) {
-    // TODO: запрос в базу данных на удаление трекера
-  }
+  const { deleteTracker } = useGlobalContext();
 
   return (
     <View style={{ gap: 10 }}>
@@ -42,29 +34,29 @@ export default function ActivityHistory({
                         {tracker.activity?.name}{" "}
                         {tracker.activityType == ActivityType.Timespan ? (
                           <View style={styles.activityContent}>
-                            <Text>{tracker.activityTimespan}</Text>
+                            <Text style={{color: 'white'}}>{tracker.activityTimespan}</Text>
                             <Text style={styles.tinyText}>мин</Text>
                           </View>
                         ) : (
                           <View style={styles.activityContent}>
                             <Text style={styles.tinyText}>подх</Text>
                             <View style={{ width: 2 }} />
-                            <Text>{tracker.activitySets}</Text>
-                            <Text>/</Text>
-                            <Text>{tracker.activityRepititions}</Text>
+                            <Text style={{color: 'white'}}>{tracker.activitySets}</Text>
+                            <Text style={{color: 'white'}}>/</Text>
+                            <Text style={{color: 'white'}}>{tracker.activityRepititions}</Text>
                             <View style={{ width: 2 }} />
                             <Text style={styles.tinyText}>повт</Text>
                           </View>
                         )}
                       </ThemedText>
-                      <Pressable
+                      <TouchableOpacity
                         style={styles.deleteButton}
                         onPress={() => {
-                          onDeleteButtonPress(tracker.id);
+                          deleteTracker(tracker.id);
                         }}
                       >
                         <Text style={styles.deleteButtonText}>x</Text>
-                      </Pressable>
+                      </TouchableOpacity>
                     </View>
                   );
                 })}
@@ -85,8 +77,7 @@ const styles = StyleSheet.create({
     height: 25,
     borderRadius: 5,
     borderColor: "#faaaaa",
-    borderWidth: 1,
-    padding: 5,
+    borderWidth: 1,    
   },
   deleteButtonText: {
     color: "#faaaaa",
@@ -102,11 +93,12 @@ const styles = StyleSheet.create({
     alignItems: "baseline",
   },
   tinyText: {
+    color: "white",
     fontSize: 10,
   },
   collapsibleStyle: {
     padding: 5,
-    borderRadius: 20,
+    borderRadius: 10,
     backgroundColor: "#6554d7",
   },
 });
