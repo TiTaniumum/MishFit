@@ -24,9 +24,16 @@ public class ActivitiesController: ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Activity>> GetActivityByIdAsync(Guid id)
+    public async Task<ActionResult<Activity>> GetActivityByIdAsync(long id)
     {
         return await _service.GetActivityByIdAsync(id);
+    }
+    
+    [HttpGet]
+    [Route("searchActivityByName/{name}")]
+    public async Task<ActionResult<List<Activity>>> SearchActivityByNameAsync(string name)
+    {
+        return await _service.SearchActivityByNameAsync(name);
     }
 
     [HttpPost]
@@ -44,7 +51,7 @@ public class ActivitiesController: ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<Activity>> DeleteActivityByIdAsync(Guid id)
+    public async Task<ActionResult<Activity>> DeleteActivityByIdAsync(long id)
     {
         return await _service.DeleteActivityByIdAsync(id);
     }

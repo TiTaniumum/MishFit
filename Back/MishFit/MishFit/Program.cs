@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MishFit;
+using MishFit.Profiles;
 using MishFit.Repositories;
 using MishFit.Security;
 using MishFit.Services;
@@ -11,6 +12,8 @@ using MishFit.Services;
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
+
+services.AddAutoMapper(typeof(MappingProfile));
 
 services.Configure<JwtOptions>(configuration.GetSection(nameof(JwtOptions)));
 
@@ -22,7 +25,7 @@ services.AddDbContext<ApplicationDbContext>();
 services.AddScoped<IUsersRepository, UsersRepository>();
 services.AddScoped<IActivitiesRepository, ActivitiesRepository>();
 services.AddScoped<IMealsRepository, MealsRepository>();
-services.AddScoped<ITrackersRepository, TrackersesRepository>();
+services.AddScoped<ITrackersRepository, TrackersRepository>();
 
 services.AddScoped<IUsersService, UsersService>();
 services.AddScoped<IMealsService, MealsService>();
@@ -104,6 +107,7 @@ using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     dbContext.Database.Migrate();
+    dbContext.SeedData();
 }
 
 if (app.Environment.IsDevelopment())
@@ -113,8 +117,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseSwagger();
 app.UseSwaggerUI();
-
-
 
 app.UseAuthentication();
 app.UseRouting();

@@ -5,7 +5,7 @@ namespace MishFit.Contracts;
 
 public record UpdateMealContract(
     [Required(ErrorMessage = "Id is required.")]
-    Guid Id,
+    long Id,
     
     [Required(ErrorMessage = "Name is required.")]
     [StringLength(30, MinimumLength = 3, ErrorMessage = "Name must be at least 3 characters long.")]

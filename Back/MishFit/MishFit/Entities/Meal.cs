@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using MishFit.Contracts;
 
 namespace MishFit.Entities;
@@ -6,7 +7,9 @@ namespace MishFit.Entities;
 
 public class Meal
 {
-    public Guid Id { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public long Id { get; set; }
 
     public string Name { get; set; } = string.Empty;
 
@@ -16,7 +19,6 @@ public class Meal
 
     public Meal(CreateMealContract contract)
     {
-        Id = Guid.NewGuid();
         Name = contract.Name;
         Calories = contract.Calories;
     }

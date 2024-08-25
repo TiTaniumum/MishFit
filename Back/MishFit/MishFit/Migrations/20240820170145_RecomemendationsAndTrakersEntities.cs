@@ -1,12 +1,13 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace MishFit.Migrations
 {
     /// <inheritdoc />
-    public partial class NewTrackersEntities : Migration
+    public partial class RecomemendationsAndTrakersEntities : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,7 +16,8 @@ namespace MishFit.Migrations
                 name: "Activities",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
                     ActivityType = table.Column<int>(type: "integer", nullable: false),
                     Calories = table.Column<int>(type: "integer", nullable: false)
@@ -29,7 +31,8 @@ namespace MishFit.Migrations
                 name: "Meals",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Calories = table.Column<int>(type: "integer", nullable: false)
                 },
@@ -39,16 +42,33 @@ namespace MishFit.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Recommendations",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Title = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Content = table.Column<string>(type: "text", nullable: false),
+                    RecommendationType = table.Column<int>(type: "integer", nullable: false),
+                    AddDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DeleteDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Recommendations", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Trackers",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     TrackerType = table.Column<int>(type: "integer", nullable: false),
-                    MealId = table.Column<Guid>(type: "uuid", nullable: true),
+                    MealId = table.Column<long>(type: "bigint", nullable: true),
                     MealGrams = table.Column<int>(type: "integer", nullable: true),
-                    ActivityId = table.Column<Guid>(type: "uuid", nullable: true),
-                    ActivityId1 = table.Column<Guid>(type: "uuid", nullable: true),
+                    ActivityId = table.Column<long>(type: "bigint", nullable: true),
                     ActivityType = table.Column<int>(type: "integer", nullable: true),
                     ActivityTimespan = table.Column<int>(type: "integer", nullable: true),
                     ActivitySets = table.Column<int>(type: "integer", nullable: true),
@@ -63,8 +83,8 @@ namespace MishFit.Migrations
                 {
                     table.PrimaryKey("PK_Trackers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Trackers_Activities_ActivityId1",
-                        column: x => x.ActivityId1,
+                        name: "FK_Trackers_Activities_ActivityId",
+                        column: x => x.ActivityId,
                         principalTable: "Activities",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -81,9 +101,9 @@ namespace MishFit.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Trackers_ActivityId1",
+                name: "IX_Trackers_ActivityId",
                 table: "Trackers",
-                column: "ActivityId1");
+                column: "ActivityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Trackers_MealId",
@@ -99,6 +119,9 @@ namespace MishFit.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Recommendations");
+
             migrationBuilder.DropTable(
                 name: "Trackers");
 

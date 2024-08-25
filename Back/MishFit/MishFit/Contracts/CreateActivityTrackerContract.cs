@@ -6,15 +6,15 @@ namespace MishFit.Contracts;
 public record CreateActivityTrackerContract
 (
     [Required(ErrorMessage = "ActivityId is required.")]
-    Guid ActivityId,
+    long ActivityId,
     
     [Required(ErrorMessage = "ActivityType is required.")]
     ActivityType ActivityType,
     
-    int ActivityTimespan,
+    int? ActivityTimespan,
     
-    int ActivitySets,
+    int? ActivitySets,
     
-    int ActivityRepetitions
+    int? ActivityRepetitions
     
 );

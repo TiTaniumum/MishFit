@@ -41,7 +41,7 @@ public class JwtProvider : IJwtProvider
 
         try
         {
-            var principal = tokenHandler.ValidateToken(token, new TokenValidationParameters
+            var principal = tokenHandler.ValidateToken(token.Split(" ")[1], new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(key),
@@ -49,9 +49,9 @@ public class JwtProvider : IJwtProvider
                 ValidateAudience = false,
                 ClockSkew = TimeSpan.Zero
             }, out SecurityToken validatedToken);
-
+            
             var userIdClaim = principal.FindFirst("userId");
-
+            
             return userIdClaim?.Value;
         }
         catch

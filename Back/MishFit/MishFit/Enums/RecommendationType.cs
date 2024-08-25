@@ -2,11 +2,18 @@
 
 public enum RecommendationType
 {
-    WeightLoss,
+    WeightLoss=1,
     WeightGain,
-    Hidration,
-    Stepps,
-    Weather,
+    WaterBalance,
+    Steps,
+    Rainy,
+    Sunny,
+    Cloudy,
+    Flowering,
+    Snowfall,
+    Snowstorm,
+    BadWeather,
+    GoodWeather,
     Sleep,
-    Advertisement
+    Advertising
 }
