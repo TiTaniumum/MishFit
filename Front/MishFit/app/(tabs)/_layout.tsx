@@ -1,19 +1,35 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const [isLogged, setIsLogged] = useState(false);
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      const userId = await AsyncStorage.getItem("userId");
+      if (userId != null) {
+        setIsLogged(true);
+      }
+      else {
+        setIsLogged(false);
+      }
+    };
+
+    checkLoginStatus();
+  }, []);
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-      }}>
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{

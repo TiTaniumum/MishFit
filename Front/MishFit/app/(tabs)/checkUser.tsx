@@ -1,52 +1,48 @@
-import { ScrollView, Text, View, StyleSheet } from 'react-native';
+import { ScrollView, TouchableOpacity, Text, View, StyleSheet } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
-
+import Profile from '@/components/Profile';
+import Register from '@/components/Register';
+import Unauthorized from '@/components/Unauthorized';
+import Auth from '@/components/Auth';
 export default function CheckUser() {
     const router = useRouter();
-    const [isLogged, setLogged] = useState(false);
-
+    const [profileSwitch, setProfileSwitch] = useState(0);
     useEffect(() => {
-        const fetchUserId = async () => {
-            try {
-                // const userId = await AsyncStorage.getItem("userId");
-                const userId = 1;
-                if (userId == 1) {
-                    setLogged(true);
-                } else {
-                    setLogged(false);
-                }
-            } catch (error) {
-                console.error('Failed to fetch userId from AsyncStorage', error);
-            }
-        };
+        const userId = 1;
 
-        fetchUserId();
-    }, []);
-
-    useEffect(() => {
-        if (isLogged) {
-            router.replace('/profile');
-        } else {
-            router.replace('/register');
+        if (false) {
+            setProfileSwitch(1)
         }
-    }, [isLogged]);
-
+        else {
+            setProfileSwitch(0)
+        }
+    }, [])
     return (
-        <ScrollView>
-            <View style={styles.container}>
-                <Text>Проверка пользователя...</Text>
-            </View>
-        </ScrollView>
+        <View>
+            {profileSwitch == 0 && (
+                <View style={styles.container}>
+                    <Text>Вы не авторизовались</Text>
+                    <TouchableOpacity onPress={() => { setProfileSwitch(2) }}>
+                        <Text>Зарегаться</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => { setProfileSwitch(3) }}>
+                        <Text>Войти</Text>
+                    </TouchableOpacity>
+                </View>)}
+            {profileSwitch == 1 && (<Profile />)}
+            {profileSwitch == 2 && (<Register></Register>)}
+            {profileSwitch == 3 && (<Auth></Auth>)}
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'column',
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        minHeight: '100%',
+
     }
 });
