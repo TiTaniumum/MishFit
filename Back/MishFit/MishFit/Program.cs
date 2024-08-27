@@ -39,7 +39,20 @@ services.AddScoped<IPasswordHasher, PasswordHasher>();
 
 services.AddHealthChecks();
 
+
+services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder => builder
+            .WithOrigins("http://localhost:8081")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials());
+});
+
 services.AddControllers();
+
+
 
 builder.Logging.AddConsole();
 
@@ -103,6 +116,8 @@ services.AddScoped<IRecommendationsService, RecommendationsService>();
 
 var app = builder.Build();
 
+app.UseCors("AllowSpecificOrigin");
+
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -126,6 +141,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.UseHealthChecks("/health");
-
 
 app.Run();
