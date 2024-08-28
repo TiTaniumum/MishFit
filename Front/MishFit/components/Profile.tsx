@@ -43,11 +43,11 @@ export default function Profile() {
                 setUserData({
                     birthDate: data.birthDate || 'Не указана',
                     email: data.email || 'Не указана',
-                    height: Number(data.height) || 0,  // Cast to number
+                    height: Number(data.height) || 0,
                     sex: data.sex ? (data.sex === 'M' ? 'Муж.' : 'Жен.') : 'Не указан',
-                    weight: Number(data.weight) || 0,  // Cast to number
-                    weightGoal: Number(data.weightGoal) || 0,  // Cast to number
-                    stepsGoal: Number(data.stepsGoal) || 0,  // Cast to number
+                    weight: Number(data.weight) || 0, 
+                    weightGoal: Number(data.weightGoal) || 0,
+                    stepsGoal: Number(data.stepsGoal) || 0,
                 });
             }
         }

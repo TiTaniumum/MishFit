@@ -4,6 +4,7 @@ import { Colors } from '@/constants/Colors';
 import InputField from './InputField';
 import Button from './Button';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 interface RegisterProps {
   onRegisterSuccess: () => void; // Функция обратного вызова для успешной регистрации
 }
@@ -17,9 +18,18 @@ export default function Register({ onRegisterSuccess }: RegisterProps) {
   const [height, setHeight] = useState('');
   const [stepsGoal, setStepsGoal] = useState('');
   const [weightGoal, setWeightGoal] = useState('');
+  const [error, setError] = useState<string | null>(null); // Состояние для хранения сообщений об ошибках
 
   const handleRegister = async () => {
+    if (password !== confirmPassword) {
+      setError('Пароли не совпадают');
+      return;
+    }
+
     try {
+      // Проверяем формат даты перед отправкой
+      const formattedDate = new Date(birthDate).toISOString();
+
       const response = await fetch('http://178.90.42.61:55555/api/v1/Users/register', {
         method: 'POST',
         headers: {
@@ -28,7 +38,7 @@ export default function Register({ onRegisterSuccess }: RegisterProps) {
         body: JSON.stringify({
           email,
           password,
-          // birthDate,
+          birthDate: formattedDate, // Отправляем дату в формате ISO
           weight,
           height,
           stepsGoal,
@@ -44,10 +54,10 @@ export default function Register({ onRegisterSuccess }: RegisterProps) {
       const data = await response.json();
       console.log('Регистрация успешна:', data);
       await AsyncStorage.setItem('userId', data.id.toString());
-      console.log(data.id.toString());
       onRegisterSuccess(); // Вызов функции обратного вызова
     } catch (err) {
       console.error('Ошибка при регистрации:', err);
+      setError(err.message); // Устанавливаем сообщение об ошибке
     }
   };
 
@@ -109,6 +119,7 @@ export default function Register({ onRegisterSuccess }: RegisterProps) {
         placeholder="10000"
         keyboardType="numeric"
       />
+      {error && <Text style={styles.errorText}>{error}</Text>}
       <Button title='Регистрация' onPress={handleRegister} />
     </ScrollView>
   );
@@ -117,7 +128,7 @@ export default function Register({ onRegisterSuccess }: RegisterProps) {
 const styles = StyleSheet.create({
   wrapper: {
     padding: 15,
-    width: '100%'
+    width: '100%',
   },
   header: {
     fontSize: 18,
@@ -127,5 +138,9 @@ const styles = StyleSheet.create({
   },
   subHeader: {
     marginBottom: 24,
+  },
+  errorText: {
+    color: 'red',
+    marginBottom: 10,
   },
 });
