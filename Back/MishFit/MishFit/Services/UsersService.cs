@@ -34,6 +34,13 @@ public class UsersService : IUsersService
 
         return await _repository.GetUserByIdAsync(id);
     }
+
+    public async Task<User> GetUserByTokenAsync(string token)
+    {
+        var userId = new Guid(
+            _jwtProvider.GetUserIdFromToken(token) ?? "");
+        return await GetUserByIdAsync(userId);
+    }
     
     public async Task<User> RegisterUserAsync(RegisterUserContract contract)
     {

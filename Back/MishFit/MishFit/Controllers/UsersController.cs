@@ -53,6 +53,27 @@ public class UsersController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
         }
     }
+    [HttpGet]
+    [Route("getUserByToken/{token}")]
+    public async Task<ActionResult<User>> GetUserByTokenAsync(string token)
+    {
+        try
+        {
+            return StatusCode(StatusCodes.Status200OK, await _service.GetUserByTokenAsync("Bearer "+token));
+        }
+        catch (InvalidIncomingParameterException e)
+        {
+            return StatusCode(StatusCodes.Status400BadRequest, e.Message);
+        }
+        catch (ElementAlreadyExistsException e)
+        {
+            return StatusCode(StatusCodes.Status400BadRequest, e.Message);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+        }
+    }
 
     [HttpPut]
     public async Task<ActionResult<User>> UpdateUserAsync([FromBody] UpdateUserContract contract)
@@ -142,4 +163,5 @@ public class UsersController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
         }
     }
+    
 }
