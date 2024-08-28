@@ -19,13 +19,15 @@ export default interface Tracker{
 }
 
 export enum TrackerType{
-    Calorie,
+    // Илья попросил заменить на 1
+    Calorie = 1,
     Activity,
     Sleep,
 }
 
 export enum ActivityType{
-    Countable,
+    // Илья попросил заменить на 1
+    Countable = 1, 
     Timespan,
 }
 

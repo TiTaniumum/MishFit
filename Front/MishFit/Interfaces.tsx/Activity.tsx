@@ -1,5 +1,4 @@
 import { ActivityType } from "./Tracker"
-
 export default interface Activity {
     id: number,
     name: string,

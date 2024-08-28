@@ -4,6 +4,7 @@ import Svg, { Path } from 'react-native-svg';
 import * as Progress from 'react-native-progress';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useGlobalContext } from './ContextProvider';
+import { Colors } from '@/constants/Colors';
 
 export default function WaterTracker() {
     const { dailyIntake, waterIntake, setWaterIntake } = useGlobalContext();
@@ -123,7 +124,7 @@ export default function WaterTracker() {
 const styles = StyleSheet.create({
     container: {
         padding: 16,
-        backgroundColor: '#fff',
+        backgroundColor: Colors.white,
         borderRadius: 10,
         marginBottom: 16,
         alignItems: 'center',
@@ -164,7 +165,6 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         flexDirection: 'row',
-        justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 20,
     },
@@ -180,16 +180,19 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     circleButton: {
-        width: 50,
-        height: 50,
         backgroundColor: '#6554d7',
-        borderRadius: 25,
+        borderRadius: 5000,
+        width: 40,
+        height: 40,
         justifyContent: 'center',
         alignItems: 'center',
     },
     circleButtonText: {
         color: '#fff',
-        fontSize: 24,
+        fontSize: 18,
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
     },
     buttonText: {
         color: '#fff',
