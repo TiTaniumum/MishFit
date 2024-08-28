@@ -30,8 +30,17 @@ export default function Auth({ onRegisterSuccess }: AuthProps) {
 
             const data = await response.json();
             console.log('Авторизация успешна:', data);
-            await AsyncStorage.setItem('userId', "c0dfb2b0-39b9-4ddf-823d-2a2debe1bae7"); // Используйте ID из ответа
-            onRegisterSuccess(); // Вызов функции обратного вызова
+            const userToken = data.token;
+            try {
+                const resp = await fetch(`http://178.90.42.61:55555/api/v1/Users/getUserByToken/${userToken}`)
+                const data = await resp.json();
+                const userId = data.id;
+                await AsyncStorage.setItem('userId', userId); 
+                onRegisterSuccess();
+            }
+            catch (err) {
+                console.log('Ошибка: ', err);
+            }
         } catch (err) {
             console.error('Ошибка при авторизации:', err);
         }
